@@ -1,5 +1,7 @@
 # Javascript API BLOG
 
-![js](https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png) ![express](https://upload.wikimedia.org/wikipedia/commons/6/64/Expressjs.png) ![tailwindcss](https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg)
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png" width="200" />
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Expressjs.png" width="200" />
+<img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" width="200" />
 
 ## (NodeJs, Express & Tailwind Css)
