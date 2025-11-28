@@ -7,4 +7,6 @@ import { connectDB } from './config/db.js';
 await connectDB();
 const port = process.env.PORT;
 
-app.listen(port, () => console.log(`> Server running in http://localhost:${port}`));
+app.listen(port, () =>
+  console.log(`> Server running in http://localhost:${port}`),
+);
