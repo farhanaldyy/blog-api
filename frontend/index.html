@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Login Page</title>
+
+      <link href="./src/output.css" rel="stylesheet" />
+   </head>
+   <body class="bg-neutral-100">
+      <div class="min-h-lvh min-w-lvw flex items-center justify-center font-display">
+         <div class="bg-white p-10 rounded-xl w-sm md:w-md lg:w-xl">
+            <div class="mb-8">
+               <h1 class="text-3xl font-semibold">Login Here👋</h1>
+               <p class="text-sm md:text-base mt-2">Hello, welcome to web blog personal.</p>
+            </div>
+            <form>
+               <div class="mb-8">
+                  <div class="flex flex-col">
+                     <label class="text-sm md:text-base mb-2">Email:</label>
+                     <input class="bg-neutral-100 px-4 py-2 text-sm md:text-base rounded-md border-2 border-neutral-200" type="email" name="email" id="email" required placeholder="name@gmail.com" />
+                  </div>
+                  <div class="flex flex-col mt-4">
+                     <label class="text-sm md:text-base mb-2">Password:</label>
+                     <input class="bg-neutral-100 px-4 py-2 text-sm md:text-base rounded-md border-2 border-neutral-200" type="password" name="password" id="password" required />
+                  </div>
+               </div>
+               <div>
+                  <button class="w-full text-sm md:text-base bg-sky-700 text-white font-semibold rounded-md py-2 hover:bg-sky-800 hover:cursor-pointer">Sign In</button>
+                  <div class="mt-4 flex flex-col md:flex-row md:items-center md:justify-between">
+                     <span class="text-sm md:text-base block">Don't have account? <a class="font-medium text-sky-700" href="register.html">Create here.</a></span>
+                     <a class="text-sm md:text-base font-medium text-sky-700" href="#">Forgot password</a>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+   </body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Login Page</title>
+
+      <link href="./src/output.css" rel="stylesheet" />
+   </head>
+   <body class="bg-neutral-100">
+      <div class="min-h-lvh min-w-lvw flex items-center justify-center font-display">
+         <div class="bg-white p-10 rounded-xl w-sm md:w-md lg:w-xl">
+            <div class="mb-8">
+               <h1 class="text-2xl font-semibold">Create Your Account here</h1>
+            </div>
+            <form id="form-register">
+               <div class="mb-8">
+                  <div class="flex flex-col">
+                     <label class="text-sm md:text-base mb-2">Your name:</label>
+                     <input class="bg-neutral-100 px-4 py-2 text-sm md:text-base rounded-md border-2 border-neutral-200" type="text" name="uname" id="uname" required placeholder="username" />
+                  </div>
+                  <div class="flex flex-col mt-4">
+                     <label class="text-sm md:text-base mb-2">Email:</label>
+                     <input class="bg-neutral-100 px-4 py-2 text-sm md:text-base rounded-md border-2 border-neutral-200" type="email" name="email" id="email" required placeholder="name@gmail.com" />
+                  </div>
+                  <div class="flex flex-col mt-4">
+                     <label class="text-sm md:text-base mb-2">Role:</label>
+                     <select id="role" class="bg-neutral-100 px-4 py-2 text-sm md:text-base rounded-md border-2 border-neutral-200" required>
+                        <option selected class="text-sm md:text-base">Choose User</option>
+                        <option value="user-default" class="text-sm md:text-base">User (default)</option>
+                        <option value="blogging" class="text-sm md:text-base">Blogging (writter)</option>
+                     </select>
+                  </div>
+                  <div class="flex flex-col mt-4">
+                     <label class="text-sm md:text-base mb-2">Your password:</label>
+                     <input class="bg-neutral-100 px-4 py-2 text-sm md:text-base rounded-md border-2 border-neutral-200" type="password" name="password" id="password" required />
+                  </div>
+                  <div class="flex flex-col mt-4">
+                     <label class="text-sm md:text-base mb-2">Retype your password:</label>
+                     <input class="bg-neutral-100 px-4 py-2 text-sm md:text-base rounded-md border-2 border-neutral-200" type="password" name="password-re" id="password-re" required />
+                  </div>
+               </div>
+               <div>
+                  <button id="button-register" type="submit" class="w-full text-sm md:text-base bg-sky-700 text-white font-semibold rounded-md py-2 hover:bg-sky-800 hover:cursor-pointer">
+                     Register Account
+                  </button>
+                  <div class="mt-4">
+                     <span class="text-sm md:text-base">Back to login <a class="font-medium text-sky-700" href="index.html">here.</a></span>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+
+      <script src="./api/auth.js"></script>
+      <script>
+         const form = document.getElementById("form-register");
+         form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const uname = document.getElementById("uname").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const passwordre = document.getElementById("password-re").value;
+            const role = document.getElementById("role").value;
+
+            if (password !== passwordre) {
+               alert("Password not match, re type password");
+               window.location.reload();
+            }
+
+            const res = await register(uname, email, password, role);
+
+            if (res.ok) {
+               alert("Register account success");
+               window.location.href = "./index.html";
+            } else {
+               alert(res.message);
+            }
+         });
+      </script>
+   </body>
+</html>

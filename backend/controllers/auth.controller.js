@@ -115,3 +115,24 @@ export const refresh = async (req, res) => {
       return res.status(500).json({ message: 'Server error ', error: error.message });
    }
 };
+
+// Logout
+export const logout = async (req, res) => {
+   try {
+      const token = req.cookies?.refresh_token;
+      if (token) {
+         const tokenHash = hashToken(token);
+         const doc = await RefreshToken.findOne({ tokenHash });
+
+         if (doc && !doc.revokedAt) {
+            doc.revokedAt = new Date();
+            await doc.save();
+         }
+      }
+
+      res.clearCookie('refresh_token', { path: '/api/auth/refresh' });
+      res.json({ message: 'Logged out' });
+   } catch (error) {
+      res.status(500).json({ message: 'Server error', error: error.message });
+   }
+};
