@@ -30,3 +30,30 @@ async function register(uname, email, password, role) {
       };
    }
 }
+
+async function login(email, password) {
+   try {
+      const res = await fetch(`${URI_API}/login`, {
+         method: 'POST',
+         headers: {
+            'Content-type': 'application/json',
+         },
+         body: JSON.stringify({
+            email: email,
+            password: password,
+         }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      return {
+         ok: res.ok,
+         ...data,
+      };
+   } catch (error) {
+      return {
+         ok: false,
+         message: `Server error: ${error.message}`,
+      };
+   }
+}
