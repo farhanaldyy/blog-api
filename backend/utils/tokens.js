@@ -14,7 +14,7 @@ export const createJti = () => {
 };
 
 export const signAccessToken = (user) => {
-   const payload = { id: user._id.toString(), email: user.email };
+   const payload = { id: user._id.toString(), email: user.email, role: user.role };
    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: ACCES_TTL });
 };
 

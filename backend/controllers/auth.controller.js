@@ -10,9 +10,7 @@ export const register = async (req, res) => {
 
       // Prevent duplicate email
       const userExists = await User.findOne({ email });
-      if (userExists) {
-         return res.status(400).json({ message: 'Email is already registered' });
-      }
+      if (userExists) return res.status(400).json({ message: 'Email is already registered' });
 
       const user = await User.create({ name, email, password, role });
 
