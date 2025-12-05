@@ -47,8 +47,8 @@ export const protect = async (req, res, next) => {
 
       req.user = decode;
       next();
-   } catch (error) {
-      const msg = error.name === 'TokenExpiredError' ? 'Access token expired' : 'Invalid Token';
-      res.status(401).json({ message: msg });
+   } catch (err) {
+      // const msg = error.name === 'TokenExpiredError' ? 'Access token expired' : 'Invalid Token';
+      next(err);
    }
 };
