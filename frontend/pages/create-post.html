@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Document</title>
+
+      <link rel="stylesheet" href="../src/output.css" />
+      <link
+         rel="stylesheet"
+         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+         crossorigin="anonymous"
+         referrerpolicy="no-referrer" />
+
+      <style>
+         .tag {
+            animation: fadeIn 0.15s ease-in-out;
+         }
+
+         @keyframes fadeIn {
+            from {
+               opacity: 0;
+               transform: scale(0.95);
+            }
+            to {
+               opacity: 1;
+               transform: scale(1);
+            }
+         }
+      </style>
+   </head>
+   <body class="bg-neutral-100">
+      <nav class="relative bg-white shadow-sm">
+         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+            <div class="relative flex h-16 items-center justify-between">
+               <div class="flex items-center justify-between sm:items-stretch sm:justify-start">
+                  <div class="flex shrink-0 items-center">
+                     <img src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company" class="h-8 w-auto" />
+                     <h1 class="text-gray-900 font-normal ms-2">CREATE<span class="font-bold"> POST</span></h1>
+                  </div>
+               </div>
+               <div class="flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                  <div class="hidden sm:ml-6 sm:block">
+                     <div class="flex space-x-4">
+                        <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-900 hover:bg-white/5 hover:text-sky-700"><i class="fa-solid fa-arrow-left"></i> Back Home</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </nav>
+
+      <!-- section create -->
+      <section class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 flex justify-between">
+         <!-- left -->
+         <div class="w-[70%] max-h-lvh flex flex-col gap-4 mt-4">
+            <div class="w-full flex items-center justify-end gap-4 text-right text-gray-900 font-medium text-sm">
+               <a href="#">Edit</a>
+               <a href="#">Preview</a>
+            </div>
+            <div class="h-[550px] max-w-full px-12 py-7 bg-white rounded-lg overflow-y-auto overflow-hidden">
+               <form class="flex flex-col gap-4">
+                  <div class="flex gap-4">
+                     <input type="file" name="cover-image" id="cover-image" hidden />
+                     <button
+                        type="button"
+                        onclick="document.getElementById('cover-image').click()"
+                        class="inline-flex items-center text-gray-900 bg-brand hover:bg-gray-800 hover:text-white box-border pt-3 bg-transparent border-2 border-gray-600 hover:cursor-pointer font-medium rounded-lg text-sm px-3 py-2 focus:outline-none">
+                        <i class="fa-solid fa-magnifying-glass"></i> Upload Cover Image
+                     </button>
+                     <button
+                        type="button"
+                        onclick="document.getElementById('cover-image').click()"
+                        class="inline-flex items-center text-gray-900 bg-brand hover:bg-gray-800 hover:text-white box-border pt-3 bg-transparent border-2 border-gray-600 hover:cursor-pointer font-medium rounded-lg text-sm px-3 py-2 focus:outline-none">
+                        <i class="fa-solid fa-bolt"></i> Generate Cover Image
+                     </button>
+                  </div>
+
+                  <div>
+                     <input type="text" name="title" id="title" placeholder="New post title here..." class="text-4xl font-bold text-gray-900 w-full focus:outline-0" />
+                  </div>
+
+                  <div class="w-full">
+                     <div id="tag-container" class="flex flex-wrap items-center gap-2 rounded-lg cursor-text focus-within:ring-2 focus-within:ring-indigo-500">
+                        <input id="tag-input" type="text" placeholder="Add up to 4 tags..." class="flex-1 min-w-[120px] bg-transparent outline-none text-sm" />
+                     </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+         <!-- right -->
+         <div></div>
+      </section>
+
+      <script>
+         const tagsInput = document.getElementById("tag-input");
+         const container = document.getElementById("tag-container");
+
+         let tags = [];
+
+         function rederTags() {
+            // clear except input
+            container.querySelectorAll(".tag").forEach((el) => el.remove());
+
+            tags.forEach((tag, index) => {
+               const tagEl = document.createElement("div");
+               tagEl.className = "tag flex items-center gap-1 bg-gray-200 px-2 py-1 rounded-md text-sm";
+
+               tagEl.innerHTML = `
+                  <span># ${tag}</span>
+                  <button class="text-gray-600 hover:text-red-500" data-index="${index}">X</button>
+               `;
+               container.insertBefore(tagEl, tagsInput);
+            });
+         }
+
+         tagsInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" && tagsInput.value.trim() !== "") {
+               e.preventDefault();
+
+               const val = tagsInput.value.trim();
+
+               if (!tags.includes(val)) {
+                  tags.push(val);
+                  rederTags();
+               }
+               tagsInput.value = "";
+            }
+
+            // backspace delete tags
+            if (e.key === "Backspace" && tagsInput.value === "" && tags.length > 0) {
+               tags.pop();
+               rederTags();
+            }
+
+            container.addEventListener("click", (e) => {
+               const index = e.target.dataset.index;
+               if (index !== undefined) {
+                  tags.splice(index, 1);
+                  rederTags();
+               }
+               tagsInput.focus();
+            });
+         });
+      </script>
+   </body>
+</html>
