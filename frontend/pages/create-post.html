@@ -12,6 +12,7 @@
          integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
          crossorigin="anonymous"
          referrerpolicy="no-referrer" />
+      <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 
       <style>
          .tag {
@@ -27,6 +28,20 @@
                opacity: 1;
                transform: scale(1);
             }
+         }
+
+         .editor-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #ddd;
+         }
+
+         #editor {
+            height: 300px;
+            /* margin-top: 10px; */
+            border: none;
+            font-size: 16px;
          }
       </style>
    </head>
@@ -59,7 +74,7 @@
                <a href="#">Edit</a>
                <a href="#">Preview</a>
             </div>
-            <div class="h-[550px] max-w-full px-12 py-7 bg-white rounded-lg overflow-y-auto overflow-hidden">
+            <div class="h-[600px] max-w-full px-12 py-7 bg-white rounded-lg overflow-y-auto overflow-hidden">
                <form class="flex flex-col gap-4">
                   <div class="flex gap-4">
                      <input type="file" name="cover-image" id="cover-image" hidden />
@@ -82,9 +97,14 @@
                   </div>
 
                   <div class="w-full">
-                     <div id="tag-container" class="flex flex-wrap items-center gap-2 rounded-lg cursor-text focus-within:ring-2 focus-within:ring-indigo-500">
-                        <input id="tag-input" type="text" placeholder="Add up to 4 tags..." class="flex-1 min-w-[120px] bg-transparent outline-none text-sm" />
+                     <div id="tag-container" class="flex flex-wrap items-center gap-2 rounded-lg cursor-text">
+                        <input id="tag-input" type="text" placeholder="Add up to 4 tags..." class="flex-1 min-w-[120px] bg-transparent outline-none text-sm focus:outline-none focus:border-none" />
                      </div>
+                  </div>
+
+                  <div class="editor-container">
+                     <!-- editor area -->
+                     <div id="editor"></div>
                   </div>
                </form>
             </div>
@@ -93,7 +113,10 @@
          <div></div>
       </section>
 
+      <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+
       <script>
+         // setup tags input
          const tagsInput = document.getElementById("tag-input");
          const container = document.getElementById("tag-container");
 
@@ -109,7 +132,7 @@
 
                tagEl.innerHTML = `
                   <span># ${tag}</span>
-                  <button class="text-gray-600 hover:text-red-500" data-index="${index}">X</button>
+                  <button class="ms-1 me-1 font-bold text-red-600 hover:text-red-500" data-index="${index}">x</button>
                `;
                container.insertBefore(tagEl, tagsInput);
             });
@@ -142,6 +165,12 @@
                }
                tagsInput.focus();
             });
+         });
+
+         // setup quill form
+         const quill = new Quill("#editor", {
+            theme: "snow",
+            placeholder: "Write your post content here...",
          });
       </script>
    </body>
