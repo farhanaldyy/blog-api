@@ -1,8 +1,7 @@
+import { api, setAccessToken } from '../utils/api.js';
 URI_API = 'http://localhost:5000/api/auth';
 
 async function register(uname, email, password, role) {
-   console.log(uname, email, password, role);
-
    try {
       const res = await fetch(`${URI_API}/register`, {
          method: 'POST',
@@ -35,6 +34,7 @@ async function login(email, password) {
    try {
       const res = await fetch(`${URI_API}/login`, {
          method: 'POST',
+         credentials: 'include',
          headers: {
             'Content-type': 'application/json',
          },
@@ -42,6 +42,31 @@ async function login(email, password) {
             email: email,
             password: password,
          }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      setAccessToken(data.accessToken);
+
+      return {
+         ok: res.ok,
+         ...data,
+      };
+   } catch (error) {
+      return {
+         ok: false,
+         message: `Server error: ${error.message}`,
+      };
+   }
+}
+
+async function profile() {
+   try {
+      const res = await api('${URI_API}/profile', {
+         method: 'GET',
+         headers: {
+            'Content-type': 'application/json',
+         },
       });
 
       const data = await res.json().catch(() => ({}));

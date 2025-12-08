@@ -11,7 +11,12 @@ import AppError from './utils/appError.js';
 export const app = express();
 
 app.use(cookieParser());
-app.use(cors());
+app.use(
+   cors({
+      origin: 'http://localhost:5500', // FE origin harus spesifik
+      credentials: true, // wajib kalau pakai cookies
+   })
+);
 app.use(express.json());
 
 app.use('/api/users', userRoutes);

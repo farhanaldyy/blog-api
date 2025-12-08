@@ -32,12 +32,12 @@ export const persistRefreshToken = async ({ user, refreshToken, jti, ip, userAge
 };
 
 export const setRefreshCookie = (res, refreshToken) => {
-   const isProd = process.env.NODE_ENV === 'productions';
+   const isProd = process.env.NODE_ENV === 'production';
    res.cookie('refresh_token', refreshToken, {
       httpOnly: true,
       secure: isProd,
-      sameSite: 'strict',
-      path: '/api/auth/refresh',
+      sameSite: 'lax', // stric if prod and lax to dev
+      path: '/api/auth',
       maxAge: REFRESH_TTL_SEC * 1000,
    });
 };

@@ -3,9 +3,9 @@
    <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Document</title>
+      <title>New Post</title>
 
-      <link rel="stylesheet" href="../src/output.css" />
+      <link rel="stylesheet" href="../styles/output.css" />
       <link
          rel="stylesheet"
          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
@@ -32,13 +32,12 @@
 
          .editor-container {
             background: white;
-            border-radius: 12px;
-            padding: 20px;
+            padding: 15px;
             border: 1px solid #ddd;
          }
 
          #editor {
-            height: 300px;
+            height: 330px;
             /* margin-top: 10px; */
             border: none;
             font-size: 16px;
@@ -46,7 +45,7 @@
       </style>
    </head>
    <body class="bg-neutral-100">
-      <nav class="relative bg-white shadow-sm">
+      <nav class="relative bg-white border-b border-neutral-200">
          <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div class="relative flex h-16 items-center justify-between">
                <div class="flex items-center justify-between sm:items-stretch sm:justify-start">
@@ -58,7 +57,7 @@
                <div class="flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                   <div class="hidden sm:ml-6 sm:block">
                      <div class="flex space-x-4">
-                        <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-900 hover:bg-white/5 hover:text-sky-700"><i class="fa-solid fa-arrow-left"></i> Back Home</a>
+                        <a href="dashboard.html" class="rounded-md px-3 py-2 text-sm font-medium text-gray-900 hover:bg-white/5 hover:text-sky-700"><i class="fa-solid fa-arrow-left"></i> Back Home</a>
                      </div>
                   </div>
                </div>
@@ -70,30 +69,30 @@
       <section class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 flex justify-between">
          <!-- left -->
          <div class="w-[70%] max-h-lvh flex flex-col gap-4 mt-4">
-            <div class="w-full flex items-center justify-end gap-4 text-right text-gray-900 font-medium text-sm">
-               <a href="#">Edit</a>
-               <a href="#">Preview</a>
+            <div class="w-full flex items-center justify-end text-right text-gray-900 font-medium text-sm">
+               <a href="#" class="rounded-md text-neutral-900 px-3 py-2 text-sm font-medium hover:bg-sky-100 hover:text-neutral-600">Edit</a>
+               <a href="#" class="rounded-md text-neutral-900 px-3 py-2 text-sm font-medium hover:bg-sky-100 hover:text-neutral-600">Preview</a>
             </div>
-            <div class="h-[600px] max-w-full px-12 py-7 bg-white rounded-lg overflow-y-auto overflow-hidden">
-               <form class="flex flex-col gap-4">
+            <form id="form" class="flex flex-col gap-4" enctype="multipart/form-data">
+               <div class="h-[620px] max-w-full px-12 py-7 bg-white rounded-lg border border-neutral-200 overflow-y-auto overflow-hidden flex flex-col gap-4">
                   <div class="flex gap-4">
                      <input type="file" name="cover-image" id="cover-image" hidden />
                      <button
                         type="button"
                         onclick="document.getElementById('cover-image').click()"
-                        class="inline-flex items-center text-gray-900 bg-brand hover:bg-gray-800 hover:text-white box-border pt-3 bg-transparent border-2 border-gray-600 hover:cursor-pointer font-medium rounded-lg text-sm px-3 py-2 focus:outline-none">
+                        class="inline-flex items-center text-gray-900 hover:bg-neutral-100 box-border pt-3 bg-transparent border border-neutral-300 hover:cursor-pointer font-medium rounded-lg text-sm px-3 py-2 focus:outline-none">
                         <i class="fa-solid fa-magnifying-glass"></i> Upload Cover Image
                      </button>
                      <button
                         type="button"
                         onclick="document.getElementById('cover-image').click()"
-                        class="inline-flex items-center text-gray-900 bg-brand hover:bg-gray-800 hover:text-white box-border pt-3 bg-transparent border-2 border-gray-600 hover:cursor-pointer font-medium rounded-lg text-sm px-3 py-2 focus:outline-none">
+                        class="inline-flex items-center text-gray-900 hover:bg-neutral-100 box-border pt-3 bg-transparent border border-neutral-300 hover:cursor-pointer font-medium rounded-lg text-sm px-3 py-2 focus:outline-none">
                         <i class="fa-solid fa-bolt"></i> Generate Cover Image
                      </button>
                   </div>
 
                   <div>
-                     <input type="text" name="title" id="title" placeholder="New post title here..." class="text-4xl font-bold text-gray-900 w-full focus:outline-0" />
+                     <input autofocus type="text" name="title" id="title" placeholder="New post title here..." class="text-4xl font-bold text-gray-900 w-full focus:outline-0" />
                   </div>
 
                   <div class="w-full">
@@ -102,12 +101,22 @@
                      </div>
                   </div>
 
-                  <div class="editor-container">
+                  <div class="editor-container rounded-lg">
                      <!-- editor area -->
                      <div id="editor"></div>
                   </div>
-               </form>
-            </div>
+               </div>
+               <div class="flex gap-4 items-center">
+                  <button type="submit" value="publish" name="action" class="rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-700 hover:text-white hover:cursor-pointer">
+                     Publish
+                  </button>
+                  <button type="submit" value="draft" name="action" class="rounded-md px-4 py-2 text-sm font-semibold text-neutral-900 hover:bg-sky-100 hover:text-neutral-600 hover:cursor-pointer">
+                     Save Draft
+                  </button>
+                  <a class="rounded-md px-4 py-2 text-lg font-medium text-neutral-900 hover:bg-sky-100 hover:text-neutral-600 hover:cursor-pointer"><i class="fa-solid fa-gear"></i></a>
+                  <a href="#" class="rounded-md px-4 py-2 text-sm text-neutral-900 hover:bg-sky-100 hover:text-neutral-600 hover:cursor-pointer">Revert new changes</a>
+               </div>
+            </form>
          </div>
          <!-- right -->
          <div></div>
@@ -132,7 +141,7 @@
 
                tagEl.innerHTML = `
                   <span># ${tag}</span>
-                  <button class="ms-1 me-1 font-bold text-red-600 hover:text-red-500" data-index="${index}">x</button>
+                  <button class="ms-1 me-1 font-bold text-red-600 hover:text-red-500 hover:cursor-pointer" data-index="${index}">x</button>
                `;
                container.insertBefore(tagEl, tagsInput);
             });
@@ -171,6 +180,21 @@
          const quill = new Quill("#editor", {
             theme: "snow",
             placeholder: "Write your post content here...",
+         });
+
+         // form actions
+         const form = document.getElementById("form").addEventListener("submit", (e) => {
+            const coverImage = document.getElementById("cover-image");
+            const title = document.getElementById("title");
+            const tags = document.getElementById("tag-input");
+            const category = document.getElementById("category");
+            const content = quill.root.innerHTML;
+            const clickButton = e.submitter.value;
+            let publish = null;
+
+            if (clickButton === "publish") {
+               publish = new Date();
+            }
          });
       </script>
    </body>
