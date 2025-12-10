@@ -36,8 +36,9 @@
          </div>
       </div>
 
-      <script src="../api/auth.js"></script>
-      <script>
+      <script type="module">
+         import { login } from "../api/auth.js";
+
          const form = document.getElementById("form-login");
          form.addEventListener("submit", async (e) => {
             e.preventDefault();

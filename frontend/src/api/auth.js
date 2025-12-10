@@ -1,5 +1,5 @@
 import { api, setAccessToken } from '../utils/api.js';
-URI_API = 'http://localhost:5000/api/auth';
+const URI_API = 'http://localhost:5000/api/auth';
 
 async function register(uname, email, password, role) {
    try {
@@ -22,10 +22,10 @@ async function register(uname, email, password, role) {
          ok: res.ok,
          ...data,
       };
-   } catch (error) {
+   } catch (err) {
       return {
          ok: false,
-         message: `Server error: ${error.message}`,
+         message: `Server error: ${err.message}`,
       };
    }
 }
@@ -52,18 +52,19 @@ async function login(email, password) {
          ok: res.ok,
          ...data,
       };
-   } catch (error) {
+   } catch (err) {
       return {
          ok: false,
-         message: `Server error: ${error.message}`,
+         message: `Server error: ${err.message}`,
       };
    }
 }
 
-async function profile() {
+async function logout() {
    try {
-      const res = await api('${URI_API}/profile', {
-         method: 'GET',
+      const res = await fetch(`${URI_API}/logout`, {
+         method: 'POST',
+         credentials: 'include',
          headers: {
             'Content-type': 'application/json',
          },
@@ -75,10 +76,36 @@ async function profile() {
          ok: res.ok,
          ...data,
       };
-   } catch (error) {
+   } catch (err) {
       return {
          ok: false,
-         message: `Server error: ${error.message}`,
+         message: `Server error: ${err.message}`,
       };
    }
 }
+
+async function profile() {
+   try {
+      const res = await api(`${URI_API}/profile`, {
+         method: 'GET',
+         credentials: 'include',
+         headers: {
+            'Content-type': 'application/json',
+         },
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      return {
+         ok: res.ok,
+         ...data,
+      };
+   } catch (err) {
+      return {
+         ok: false,
+         message: `Server error: ${err.message}`,
+      };
+   }
+}
+
+export { login, register, logout, profile };

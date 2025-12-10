@@ -42,6 +42,12 @@
             border: none;
             font-size: 16px;
          }
+
+         #preview {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+         }
       </style>
    </head>
    <body class="bg-neutral-100">
@@ -68,13 +74,16 @@
       <!-- section create -->
       <section class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 flex justify-between">
          <!-- left -->
-         <div class="w-[70%] max-h-lvh flex flex-col gap-4 mt-4">
+         <div class="w-[70%] max-h-lvh flex flex-col gap-1 mt-2">
             <div class="w-full flex items-center justify-end text-right text-gray-900 font-medium text-sm">
                <a href="#" class="rounded-md text-neutral-900 px-3 py-2 text-sm font-medium hover:bg-sky-100 hover:text-neutral-600">Edit</a>
                <a href="#" class="rounded-md text-neutral-900 px-3 py-2 text-sm font-medium hover:bg-sky-100 hover:text-neutral-600">Preview</a>
             </div>
-            <form id="form" class="flex flex-col gap-4" enctype="multipart/form-data">
-               <div class="h-[620px] max-w-full px-12 py-7 bg-white rounded-lg border border-neutral-200 overflow-y-auto overflow-hidden flex flex-col gap-4">
+            <form id="form" class="flex flex-col gap-4">
+               <div class="h-[650px] max-w-full px-12 py-7 bg-white rounded-lg border border-neutral-200 overflow-y-auto overflow-hidden flex flex-col gap-4">
+                  <!-- cover image -->
+                  <img id="preview" class="rounded-lg hidden" />
+
                   <div class="flex gap-4">
                      <input type="file" name="cover-image" id="cover-image" hidden />
                      <button
@@ -124,7 +133,9 @@
 
       <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 
-      <script>
+      <script type="module">
+         import { createPosts } from "../api/blogs.js";
+
          // setup tags input
          const tagsInput = document.getElementById("tag-input");
          const container = document.getElementById("tag-container");
@@ -182,18 +193,48 @@
             placeholder: "Write your post content here...",
          });
 
+         // cover image preview
+         const fileImage = document.querySelector("#cover-image");
+         const preview = document.getElementById("preview");
+
+         fileImage.addEventListener("change", () => {
+            const file = fileImage.files[0];
+            if (!file) return;
+
+            const blobUrl = URL.createObjectURL(file);
+            preview.src = blobUrl;
+
+            preview.classList.remove("hidden");
+            // Optional: free memory kalau perlu
+            preview.onload = () => URL.revokeObjectURL(blobUrl);
+         });
+
          // form actions
-         const form = document.getElementById("form").addEventListener("submit", (e) => {
-            const coverImage = document.getElementById("cover-image");
-            const title = document.getElementById("title");
-            const tags = document.getElementById("tag-input");
-            const category = document.getElementById("category");
+         const form = document.getElementById("form");
+         form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const title = document.getElementById("title").value;
+            const coverImage = fileImage.files[0];
+            const category = tags[0];
             const content = quill.root.innerHTML;
             const clickButton = e.submitter.value;
-            let publish = null;
+            let publish, status;
 
             if (clickButton === "publish") {
                publish = new Date();
+               status = "published";
+            } else {
+               publish = null;
+               status = "draft";
+            }
+
+            const res = await createPosts(title, content, coverImage, tags, category, status, publish);
+
+            if (res.ok) {
+               alert("Blogs created.");
+            } else {
+               alert(res.message);
             }
          });
       </script>

@@ -5,11 +5,15 @@ export function setAccessToken(token) {
 }
 
 export async function api(url, options = {}) {
+   console.log(accessToken);
+
+   const isFormData = options.body instanceof FormData;
+
    const res = await fetch(url, {
       credentials: 'include',
       ...options,
       headers: {
-         ...options.headers,
+         ...(isFormData ? {} : options.headers),
          Authorization: accessToken ? `Bearer ${accessToken}` : '',
       },
    });
@@ -35,7 +39,7 @@ export async function api(url, options = {}) {
             ...options,
             credentials: 'include',
             headers: {
-               ...options.headers,
+               ...(isFormData ? {} : options.headers),
                Authorization: `Bearer ${accessToken}`,
             },
          });

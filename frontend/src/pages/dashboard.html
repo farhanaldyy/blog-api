@@ -62,7 +62,7 @@
                         class="w-48 origin-top-right rounded-md bg-white py-1 shadow-lg outline outline-black/5 transition transition-discrete [--anchor-gap:--spacing(2)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in">
                         <a href="#" class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden">Your profile</a>
                         <a href="#" class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden">Settings</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden">Sign out</a>
+                        <a id="logout" href="#" class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden">Sign out</a>
                      </el-menu>
                   </el-dropdown>
                </div>
@@ -82,5 +82,22 @@
 
       <!-- content section -->
       <section class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8"></section>
+
+      <!-- script -->
+      <script type="module">
+         import { logout } from "../api/auth.js";
+
+         const btnLogout = document.getElementById("logout").addEventListener("click", async (e) => {
+            e.preventDefault();
+
+            const res = await logout();
+            if (res.ok) {
+               alert("User logout");
+               window.location.href = "index.html";
+            } else {
+               alert(res.message);
+            }
+         });
+      </script>
    </body>
 </html>

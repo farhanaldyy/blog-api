@@ -41,10 +41,12 @@ export const setRefreshCookie = (req, res, token) => {
 
    res.cookie('refresh_token', token, {
       httpOnly: true,
-      secure: isProd ? true : false,
-      sameSite: isProd ? 'strict' : 'lax',
+      // secure: isProd ? true : false,
+      // sameSite: isProd ? 'strict' : 'lax', // if access frontend, then block because sameSite is strict or lax
+      secure: true, // secure must be true if sameSite none
+      sameSite: 'none', // access in frontend or browser
       maxAge: REFRESH_TTL_SEC * 1000,
-      path: '/', // for postman
+      path: '/', // read all route
    });
 };
 

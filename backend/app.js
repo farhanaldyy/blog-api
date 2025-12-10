@@ -12,7 +12,8 @@ export const app = express();
 
 app.use(
    cors({
-      origin: true,
+      // origin: true, if use postman
+      origin: 'http://localhost:5500',
       credentials: true,
    })
 );
