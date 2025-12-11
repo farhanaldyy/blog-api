@@ -20,10 +20,19 @@ async function createPosts(title, content, coverImage, tags, category, status, p
       formData.append('tags', tags);
    }
 
-   formData.append('categories', category);
+   if (Array.isArray(category)) {
+      category.forEach((data) => {
+         formData.append('categories[]', data);
+      });
+   } else {
+      formData.append('categories', category);
+   }
 
+   formData.append('publishAt', publish ?? '');
    formData.append('status', status);
-   formData.append('publishAt', publish);
+
+   console.log('publish (raw):', publish);
+   console.log('is string:', typeof publish);
 
    try {
       const res = await api(`${URL_API}/`, {
@@ -35,6 +44,7 @@ async function createPosts(title, content, coverImage, tags, category, status, p
 
       return {
          ok: res.ok,
+         message: res.message,
          ...data,
       };
    } catch (err) {

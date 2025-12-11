@@ -3,7 +3,7 @@ import { Posts } from '../models/posting.model.js';
 // simple create posting blog
 export const createPost = async (req, res, next) => {
    try {
-      const { title, content, excerpt, tags = [], categories = [] } = req.body;
+      const { title, content, excerpt, tags = [], categories = [], publishAt, status } = req.body;
 
       // cover image dump
       const coverImageUrl = req.file ? `/uploads/${req.file.filename}` : null;
@@ -17,7 +17,8 @@ export const createPost = async (req, res, next) => {
          authorId: req.user.id,
          tags: Array.isArray(tags) ? tags : tags.split(',').map((arr) => arr.trim()),
          categories: Array.isArray(categories) ? categories : categories.split(',').map((arr) => arr.trim()),
-         status: 'draft',
+         status,
+         publishAt: publishAt ? new Date(publishAt) : null,
       });
 
       res.status(201).json({

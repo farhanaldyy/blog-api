@@ -10,10 +10,17 @@ import AppError from './utils/appError.js';
 
 export const app = express();
 
+const allowOrigins = [
+   'http://localhost:5500', // live server
+   'http://127.0.0.1:5500',
+   'http://localhost:3000', // serve
+   'http://127.0.0.1:3000',
+];
+
 app.use(
    cors({
-      // origin: true, if use postman
-      origin: 'http://localhost:5500',
+      // origin: true, all allowed
+      origin: allowOrigins,
       credentials: true,
    })
 );

@@ -5,7 +5,7 @@ export function setAccessToken(token) {
 }
 
 export async function api(url, options = {}) {
-   console.log(accessToken);
+   // console.log(accessToken);
 
    const isFormData = options.body instanceof FormData;
 
@@ -30,7 +30,7 @@ export async function api(url, options = {}) {
 
       if (refreshRes.ok) {
          const refreshData = await refreshRes.json();
-         accessToken = refreshData.accesstoken; //update token lokal
+         accessToken = refreshData.accessToken; //update token lokal
 
          console.log('Token refreshed: ', accessToken);
 

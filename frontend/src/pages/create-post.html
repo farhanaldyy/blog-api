@@ -5,6 +5,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>New Post</title>
 
+      <link rel="icon" href="/favicon.ico" />
       <link rel="stylesheet" href="../styles/output.css" />
       <link
          rel="stylesheet"
@@ -79,6 +80,7 @@
                <a href="#" class="rounded-md text-neutral-900 px-3 py-2 text-sm font-medium hover:bg-sky-100 hover:text-neutral-600">Edit</a>
                <a href="#" class="rounded-md text-neutral-900 px-3 py-2 text-sm font-medium hover:bg-sky-100 hover:text-neutral-600">Preview</a>
             </div>
+            <!-- Form input -->
             <form id="form" class="flex flex-col gap-4">
                <div class="h-[650px] max-w-full px-12 py-7 bg-white rounded-lg border border-neutral-200 overflow-y-auto overflow-hidden flex flex-col gap-4">
                   <!-- cover image -->
@@ -116,10 +118,18 @@
                   </div>
                </div>
                <div class="flex gap-4 items-center">
-                  <button type="submit" value="publish" name="action" class="rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-700 hover:text-white hover:cursor-pointer">
+                  <button
+                     type="submit"
+                     data-action="publish"
+                     name="action"
+                     class="rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-700 hover:text-white hover:cursor-pointer">
                      Publish
                   </button>
-                  <button type="submit" value="draft" name="action" class="rounded-md px-4 py-2 text-sm font-semibold text-neutral-900 hover:bg-sky-100 hover:text-neutral-600 hover:cursor-pointer">
+                  <button
+                     type="submit"
+                     data-action="draft"
+                     name="action"
+                     class="rounded-md px-4 py-2 text-sm font-semibold text-neutral-900 hover:bg-sky-100 hover:text-neutral-600 hover:cursor-pointer">
                      Save Draft
                   </button>
                   <a class="rounded-md px-4 py-2 text-lg font-medium text-neutral-900 hover:bg-sky-100 hover:text-neutral-600 hover:cursor-pointer"><i class="fa-solid fa-gear"></i></a>
@@ -193,7 +203,7 @@
             placeholder: "Write your post content here...",
          });
 
-         // cover image preview
+         // setup cover image preview
          const fileImage = document.querySelector("#cover-image");
          const preview = document.getElementById("preview");
 
@@ -211,30 +221,43 @@
 
          // form actions
          const form = document.getElementById("form");
+
+         // debug
+         // form.addEventListener("submit", (e) => {
+         //    e.preventDefault();
+         //    console.log("=== DEBUG MODE ===");
+         //    console.log("Raw event:", e);
+         //    console.log("Submitter:", e.submitter);
+
+         //    const clickButton = e.submitter.dataset.action;
+         //    const publish = clickButton === "publish" ? new Date() : null;
+         //    const status = clickButton === "publish" ? "published" : "draft";
+         //    console.log(publish.toISOString(), status);
+         // });
+
          form.addEventListener("submit", async (e) => {
             e.preventDefault();
 
-            const title = document.getElementById("title").value;
-            const coverImage = fileImage.files[0];
-            const category = tags[0];
-            const content = quill.root.innerHTML;
-            const clickButton = e.submitter.value;
-            let publish, status;
+            try {
+               const title = document.getElementById("title").value;
+               const coverImage = fileImage.files[0];
+               const category = tags?.[0] ?? null; // category take value of tags index 0
+               const content = quill.root.innerHTML;
+               const clickButton = e.submitter.dataset.action;
 
-            if (clickButton === "publish") {
-               publish = new Date();
-               status = "published";
-            } else {
-               publish = null;
-               status = "draft";
-            }
+               const publish = clickButton === "publish" ? new Date().toISOString() : null;
+               const status = clickButton === "publish" ? "published" : "draft";
 
-            const res = await createPosts(title, content, coverImage, tags, category, status, publish);
+               const res = await createPosts(title, content, coverImage, tags, category, status, publish);
 
-            if (res.ok) {
-               alert("Blogs created.");
-            } else {
-               alert(res.message);
+               alert(res.ok ? "Success" : res.message);
+
+               setTimeout(() => {
+                  window.location.href = "./dashboard.html";
+               }, 350);
+            } catch (err) {
+               console.error("Form submitter error: ", err.message);
+               alert("Error: " + err.message);
             }
          });
       </script>
