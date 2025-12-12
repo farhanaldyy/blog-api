@@ -31,9 +31,6 @@ async function createPosts(title, content, coverImage, tags, category, status, p
    formData.append('publishAt', publish ?? '');
    formData.append('status', status);
 
-   console.log('publish (raw):', publish);
-   console.log('is string:', typeof publish);
-
    try {
       const res = await api(`${URL_API}/`, {
          method: 'POST',

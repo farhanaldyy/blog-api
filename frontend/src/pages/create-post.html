@@ -73,7 +73,7 @@
       </nav>
 
       <!-- section create -->
-      <section class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 flex justify-between">
+      <section class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 flex justify-between gap-4">
          <!-- left -->
          <div class="w-[70%] max-h-lvh flex flex-col gap-1 mt-2">
             <div class="w-full flex items-center justify-end text-right text-gray-900 font-medium text-sm">
@@ -87,11 +87,13 @@
                   <img id="preview" class="rounded-lg hidden" />
 
                   <div class="flex gap-4">
-                     <input type="file" name="cover-image" id="cover-image" hidden />
+                     <input type="file" name="cover-image" id="cover-image" accept=".jpg, .jpeg, .png, image/jpeg, image/png" hidden />
                      <button
+                        id="btn-cover"
                         type="button"
                         onclick="document.getElementById('cover-image').click()"
-                        class="inline-flex items-center text-gray-900 hover:bg-neutral-100 box-border pt-3 bg-transparent border border-neutral-300 hover:cursor-pointer font-medium rounded-lg text-sm px-3 py-2 focus:outline-none">
+                        class="inline-flex items-center text-gray-900 hover:bg-neutral-100 box-border pt-3 bg-transparent border border-neutral-300 hover:cursor-pointer font-medium rounded-lg text-sm px-3 py-2 focus:outline-none"
+                        data-description="<li>The recommended YouTube banner size is 2560 x 1440 pixels, with a centered safe area for text and logos of 1546 x 423 pixels for visibility on all devices. Ensure the logo and important text are within this safe area, and use JPG or PNG formats.</li> <br> <li>make sure the file size is less than 5 mb</li> <br> <li>use images that do not contain SARA and sexual content</li>">
                         <i class="fa-solid fa-magnifying-glass"></i> Upload Cover Image
                      </button>
                      <button
@@ -101,35 +103,53 @@
                         <i class="fa-solid fa-bolt"></i> Generate Cover Image
                      </button>
                   </div>
-
                   <div>
-                     <input autofocus type="text" name="title" id="title" placeholder="New post title here..." class="text-4xl font-bold text-gray-900 w-full focus:outline-0" />
+                     <input
+                        autofocus
+                        type="text"
+                        name="title"
+                        id="title"
+                        placeholder="New post title here..."
+                        class="text-4xl font-bold text-gray-900 w-full focus:outline-0"
+                        required
+                        data-description="<li>Think of your post title as a super short (but compelling!) description — like an overview of the actual post in one short sentence.</li> <br><li>Use keywords where appropriate to help ensure people can find your post by search.</li>" />
                   </div>
 
                   <div class="w-full">
                      <div id="tag-container" class="flex flex-wrap items-center gap-2 rounded-lg cursor-text">
-                        <input id="tag-input" type="text" placeholder="Add up to 4 tags..." class="flex-1 min-w-[120px] bg-transparent outline-none text-sm focus:outline-none focus:border-none" />
+                        <input
+                           id="tag-input"
+                           type="text"
+                           placeholder="Add up to max (4 tags)"
+                           class="flex-1 min-w-[120px] bg-transparent outline-none text-sm focus:outline-none focus:border-none"
+                           data-description="<li>Tags help people find your post - think of them as the topics or categories that best describe your post.</li> <br><li>Add up to four comma-separated tags per post. Use existing tags whenever possible.</li> <br><li>Some tags have special posting guidelines - double check to make sure your post complies with them.</li>" />
                      </div>
                   </div>
 
                   <div class="editor-container rounded-lg">
                      <!-- editor area -->
-                     <div id="editor"></div>
+                     <div
+                        id="editor"
+                        data-description="<li>Use Markdown to write and format posts.</li> <li>Commonly used syntax</li> <br><li>Embed rich content such as Tweets, YouTube videos, etc. Use the complete URL: {% embed https://... %}. See a list of supported embeds.</li> <br> <li>In addition to images for the post's content, you can also drag and drop a cover image.</li>"></div>
                   </div>
                </div>
                <div class="flex gap-4 items-center">
                   <button
+                     id="btn-pub"
                      type="submit"
                      data-action="publish"
                      name="action"
-                     class="rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-700 hover:text-white hover:cursor-pointer">
+                     class="btn-post rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-700 hover:text-white hover:cursor-pointer"
+                     data-description="<li>Ensure your post has a cover image set to make the most of the home feed and social media platforms.</li> <br> <li>Share your post on social media platforms or with your co-workers or local communities.</li> <br> <li>Ask people to leave questions for you in the comments. It's a great way to spark additional discussion describing personally why you wrote it or why people might find it helpful.</li>">
                      Publish
                   </button>
                   <button
+                     id="btn-draft"
                      type="submit"
                      data-action="draft"
                      name="action"
-                     class="rounded-md px-4 py-2 text-sm font-semibold text-neutral-900 hover:bg-sky-100 hover:text-neutral-600 hover:cursor-pointer">
+                     class="rounded-md px-4 py-2 text-sm font-semibold text-neutral-900 hover:bg-sky-100 hover:text-neutral-600 hover:cursor-pointer"
+                     data-description="<li>Ensure your post has a cover image set to make the most of the home feed and social media platforms.</li> <br> <li>Share your post on social media platforms or with your co-workers or local communities.</li> <br> <li>Ask people to leave questions for you in the comments. It's a great way to spark additional discussion describing personally why you wrote it or why people might find it helpful.</li>">
                      Save Draft
                   </button>
                   <a class="rounded-md px-4 py-2 text-lg font-medium text-neutral-900 hover:bg-sky-100 hover:text-neutral-600 hover:cursor-pointer"><i class="fa-solid fa-gear"></i></a>
@@ -138,7 +158,14 @@
             </form>
          </div>
          <!-- right -->
-         <div></div>
+         <div class="w-[30%] max-h-lvh flex items-center justify-center gap-1 mt-2">
+            <div id="rightText" class="opacity-0 translate-y-3 transition-all duration-300 ease-out">
+               <div class="w-full flex items-center justify-end text-right text-gray-900 font-medium text-sm">
+                  <h3 id="rightTitle" class="text-neutral-900 px-3 py-2 text-xl font-medium"></h3>
+               </div>
+               <p id="rightDesc" class="text-sm text-gray-600 text-justify px-3 py-2"></p>
+            </div>
+         </div>
       </section>
 
       <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
@@ -161,13 +188,13 @@
                tagEl.className = "tag flex items-center gap-1 bg-gray-200 px-2 py-1 rounded-md text-sm";
 
                tagEl.innerHTML = `
-                  <span># ${tag}</span>
-                  <button class="ms-1 me-1 font-bold text-red-600 hover:text-red-500 hover:cursor-pointer" data-index="${index}">x</button>
-               `;
+               <span># ${tag}</span>
+               <button class="ms-1 me-1 font-bold text-red-600 hover:text-red-500 hover:cursor-pointer" data-index="${index}">x</button>`;
                container.insertBefore(tagEl, tagsInput);
             });
          }
 
+         // event if enter after add tag
          tagsInput.addEventListener("keydown", (e) => {
             if (e.key === "Enter" && tagsInput.value.trim() !== "") {
                e.preventDefault();
@@ -207,9 +234,14 @@
          const fileImage = document.querySelector("#cover-image");
          const preview = document.getElementById("preview");
 
-         fileImage.addEventListener("change", () => {
+         fileImage.addEventListener("change", function () {
             const file = fileImage.files[0];
-            if (!file) return;
+            const allowedFile = ["image/jpeg", "image/png"];
+
+            if (file && !allowedFile.includes(file.type)) {
+               alert("Only JPEG and PNG files are allowed");
+               return (this.value = "");
+            }
 
             const blobUrl = URL.createObjectURL(file);
             preview.src = blobUrl;
@@ -219,21 +251,69 @@
             preview.onload = () => URL.revokeObjectURL(blobUrl);
          });
 
+         // setup hover suggestion
+         const inputsForm = document.querySelectorAll("#btn-cover, #title, #tag-input, #editor, #btn-pub, #btn-draft");
+         const rightBox = document.getElementById("rightText");
+         const rightTitle = document.getElementById("rightTitle");
+         const rightDesc = document.getElementById("rightDesc");
+         const labelMap = {
+            "btn-cover": "Upload Cover Tips",
+            title: "Writing a Great Post Title",
+            "tag-input": "Tagging Guidlines",
+            editor: "Editor Basics",
+            "btn-pub": "Publishing Tips",
+            "btn-draft": "Publishing Tips",
+         };
+
+         inputsForm.forEach((input) => {
+            input.addEventListener("mouseover", () => {
+               const desc = input.dataset.description;
+               const titleFocus = labelMap[input.id];
+
+               // Fade-out dulu biar smooth
+               rightBox.classList.add("opacity-0", "translate-y-3");
+
+               setTimeout(() => {
+                  rightTitle.textContent = titleFocus;
+                  rightDesc.innerHTML = desc;
+
+                  // Fade-in
+                  rightBox.classList.remove("opacity-0", "translate-y-3");
+                  rightBox.classList.add("opacity-100", "translate-y-0");
+               }, 150); // jeda dikit biar smooth switching
+            });
+
+            input.addEventListener("blur", () => {
+               // kalau mau tetap tampil setelah blur, hapus bagian ini
+               rightBox.classList.add("opacity-0", "translate-y-3");
+            });
+         });
+
          // form actions
          const form = document.getElementById("form");
 
-         // debug
+         // debug form input
          // form.addEventListener("submit", (e) => {
          //    e.preventDefault();
          //    console.log("=== DEBUG MODE ===");
          //    console.log("Raw event:", e);
          //    console.log("Submitter:", e.submitter);
+         //    console.log("-----------------------");
+
+         //    console.log("File:", fileImage.files[0]);
+         //    console.log("quill:", quill.root.innerHTML);
+         //    console.log("Tags:", tags);
+
+         //    if (tags.length === 0) return alert("Tags not found, add minimal 1 tag");
+
+         //    if (quill.root.innerHTML === "<p><br></p>") return alert("Your content must be write something");
 
          //    const clickButton = e.submitter.dataset.action;
          //    const publish = clickButton === "publish" ? new Date() : null;
          //    const status = clickButton === "publish" ? "published" : "draft";
          //    console.log(publish.toISOString(), status);
          // });
+         //
 
          form.addEventListener("submit", async (e) => {
             e.preventDefault();
@@ -243,8 +323,13 @@
                const coverImage = fileImage.files[0];
                const category = tags?.[0] ?? null; // category take value of tags index 0
                const content = quill.root.innerHTML;
-               const clickButton = e.submitter.dataset.action;
 
+               if (tags.length === 0) return alert("Tags not found, add minimal 1 tag");
+               if (tags.length === 5) return alert("Tagging maximal 4 tag");
+
+               if (quill.root.innerHTML === "<p><br></p>") return alert("Your content must be write something");
+
+               const clickButton = e.submitter.dataset.action;
                const publish = clickButton === "publish" ? new Date().toISOString() : null;
                const status = clickButton === "publish" ? "published" : "draft";
 
