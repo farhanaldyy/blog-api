@@ -3,11 +3,19 @@
    <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Dashboard</title>
-      <link rel="stylesheet" href="../styles/output.css" />
-      <link rel="icon" href="/favicon.ico" />
+      <title>Profile</title>
 
-      <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
+      <link rel="stylesheet" href="../styles/output.css" />
+
+      <link
+         rel="stylesheet"
+         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+         crossorigin="anonymous"
+         referrerpolicy="no-referrer" />
+
+      <!-- Protect page -->
+      <script></script>
    </head>
    <body class="bg-neutral-100">
       <!-- Include this script tag or install `@tailwindplus/elements` via npm: -->
@@ -41,9 +49,8 @@
                   <div class="hidden sm:ml-6 sm:block">
                      <div class="flex space-x-4">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
-                        <a href="#" aria-current="page" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white hover:bg-sky-700 hover:text-white">Publics</a>
-                        <a href="./create-post.html" class="rounded-md px-3 py-2 text-sm font-medium text-gray-900 hover:bg-white/5 hover:text-sky-700">Create Post</a>
-                        <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-900 hover:bg-white/5 hover:text-sky-700">Notifications</a>
+                        <a href="./dashboard.html" aria-current="page" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white hover:bg-sky-700 hover:text-white">Public</a>
+                        <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-900 hover:bg-white/5 hover:text-sky-700">Edit Profile</a>
                      </div>
                   </div>
 
@@ -84,7 +91,43 @@
       </nav>
 
       <!-- content section -->
-      <section class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8"></section>
+      <section class="mx-auto max-w-5xl px-2 sm:px-6 lg:px-8 mt-20 flex flex-col gap-4">
+         <!-- card profile -->
+         <div class="relative w-full bg-white flex flex-col gap-4 rounded-lg px-20 py-5">
+            <img src="" class="absolute -top-13 left-1/2 -translate-x-1/2 w-35 h-35 rounded-full bg-neutral-800 border-8 border-neutral-100" />
+            <!-- information -->
+            <div class="text-center mt-20">
+               <h1 id="profile-name" class="text-2xl font-medium">Farhan Aldiansyah Poetra</h1>
+               <p id="profile-bio" class="text-sm text-neutral-700 mt-4">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident animi beatae ad, tempora vero earum nam velit tempore! Error, veniam.
+               </p>
+               <div id="info-profile" class="mt-4 flex items-center gap-4 justify-center">
+                  <p id="address" class="text-sm text-neutral-700"><i class="fas fa-location-pin-lock"></i> Karawang, Indonesia</p>
+                  <p id="joinned" class="text-sm text-neutral-700"><i class="fas fa-network-wired"></i> Joined on Dec 2025</p>
+                  <p class="text-sm text-neutral-700"><i class="fas fa-link"></i> <a id="personal-web" href="#" class="text-sky-700">www.personalweb.com</a></p>
+               </div>
+            </div>
+         </div>
+
+         <!-- blog information -->
+         <div class="w-full bg-white flex items-center justify-center gap-4 rounded-lg px-20 py-5">
+            <div class="flex items-center gap-2 bg-neutral-100 py-2 px-4 rounded-lg font-medium text-neutral-700">
+               <i class="fas fa-newspaper"></i>
+               <p>1 posts published</p>
+            </div>
+            <div class="flex items-center gap-2 bg-neutral-100 py-2 px-4 rounded-lg font-medium text-neutral-700">
+               <i class="fas fa-comment-alt"></i>
+               <p>5 comments written</p>
+            </div>
+            <div class="flex items-center gap-2 bg-neutral-100 py-2 px-4 rounded-lg font-medium text-neutral-600">
+               <i class="fas fa-hashtag"></i>
+               <p>10 tags followed</p>
+            </div>
+         </div>
+
+         <!-- skills and more information -->
+         <div></div>
+      </section>
 
       <!-- script -->
       <script type="module">

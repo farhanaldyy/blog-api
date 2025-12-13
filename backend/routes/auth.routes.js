@@ -9,7 +9,7 @@ router.post('/login', login);
 router.post('/logout', logout);
 
 // Example protected route
-router.get('/profile', protect, profile);
+// router.get('/profile', protect, profile);
 
 // Refresh token
 router.post('/refresh', refresh);

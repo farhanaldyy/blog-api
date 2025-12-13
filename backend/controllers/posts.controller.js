@@ -5,7 +5,6 @@ export const createPost = async (req, res, next) => {
    try {
       const { title, content, excerpt, tags = [], categories = [], publishAt, status } = req.body;
 
-      // cover image dump
       const coverImageUrl = req.file ? `/uploads/${req.file.filename}` : null;
 
       const posts = await Posts.create({
