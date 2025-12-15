@@ -54,6 +54,7 @@ export const addProfile = async (req, res, next) => {
       res.status(201).json({
          message: 'Profile added success',
          profile: {
+            id: profile.userId,
             fullname: profile.fullname,
             bio: profile.bio,
          },
@@ -64,3 +65,22 @@ export const addProfile = async (req, res, next) => {
 };
 
 // next coding edit profile, add profile must be place in login controller after user login add automaticly create profile
+
+export const editProfile = async (req, res, next) => {
+   try {
+      const { fullname, phone, address, bio, birthday } = req.body;
+      const update = {};
+
+      if (fullname) update.fullname = fullname;
+      if (phone) update.phone = phones;
+      if (address) update.address = address;
+      if (bio) update.bio = bio;
+      if (birthday) update.birthday = birthday;
+
+      const edit = await Profile.findByIdAndUpdate(req.params.id, update, { new: true });
+      if (!edit) return res.status(404).json({ message: 'Data not found' });
+      res.json(edit);
+   } catch (err) {
+      next(err);
+   }
+};

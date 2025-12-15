@@ -2,10 +2,19 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 
+// dir storage {fieldname: 'path'}
+const uploadMap = {
+   coverImage: 'uploads/cover',
+   images: 'uploads/blog',
+   avatar: 'uploads/profile',
+};
+
 // storage config (local disk)
 const storage = multer.diskStorage({
    destination: (req, file, cb) => {
-      const uploadDir = path.join(process.cwd(), 'uploads');
+      const dirPath = uploadMap[file.fieldname] || 'uploads/more';
+      const uploadDir = path.join(process.cwd(), dirPath);
+
       if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
       cb(null, uploadDir);
    },
@@ -31,7 +40,7 @@ const limits = {
 };
 
 // upload single
-export const uploadSingle = (fieldName = 'coverImage') => {
+export const uploadSingle = (fieldName) => {
    const uploader = multer({ storage, fileFilter, limits }).single(fieldName);
    return (req, res, next) => {
       uploader(req, res, (err) => {

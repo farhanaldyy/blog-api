@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { protect } from '../middleware/auth.js';
 import { uploadSingle } from '../middleware/handleUpload.js';
-import { addProfile } from '../controllers/user.controller.js';
+import { addProfile, editProfile } from '../controllers/user.controller.js';
 
 const router = Router();
 
@@ -12,5 +12,6 @@ const router = Router();
 
 // router.post('/', protect, uploadSingle('coverImage'), addProfile); with image
 router.post('/', protect, addProfile); // without image
+router.put('/:id', protect, uploadSingle('avatar'), editProfile);
 
 export default router;

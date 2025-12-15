@@ -5,7 +5,7 @@ export const createPost = async (req, res, next) => {
    try {
       const { title, content, excerpt, tags = [], categories = [], publishAt, status } = req.body;
 
-      const coverImageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+      const coverImageUrl = req.file ? `/uploads/cover/${req.file.filename}` : null;
 
       const posts = await Posts.create({
          title,
@@ -41,7 +41,7 @@ export const updatePost = async (req, res, next) => {
       const update = {};
 
       // check if client update image
-      if (req.file) update.coverImage = `/uploads/${req.file.filename}`;
+      if (req.file) update.coverImage = `/uploads/cover/${req.file.filename}`;
 
       // check req client, format tags and categories
       if (title) update.title = title;
