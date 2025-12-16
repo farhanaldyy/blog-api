@@ -1,5 +1,18 @@
 import { Posts } from '../models/posting.model.js';
 
+// read post (author)
+export const readPost = async (req, res, next) => {
+   try {
+      const posts = await Posts.find({ authorId: req.user.id }).lean();
+
+      if (!posts) res.status(404).json({ message: 'Data not found!' });
+
+      res.json(posts);
+   } catch (err) {
+      next(err);
+   }
+};
+
 // simple create posting blog
 export const createPost = async (req, res, next) => {
    try {

@@ -3,7 +3,8 @@ import mongose from 'mongoose';
 const profileScheme = new mongose.Schema(
    {
       userId: { type: mongose.Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
-      fullname: { type: String, required: true },
+      username: { type: mongose.Schema.Types.String, ref: 'User', required: true },
+      fullname: { type: String, default: null },
       avatar: { type: String, default: null },
       phone: { type: Number, default: null },
       address: { type: String, default: null },

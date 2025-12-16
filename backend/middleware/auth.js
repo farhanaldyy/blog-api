@@ -41,11 +41,15 @@ export const protect = async (req, res, next) => {
       const decode = jwt.verify(token, process.env.JWT_SECRET);
 
       // if user (deleted, suspend, role change)
-      const user = await User.findById(decode.id).select('-password');
+      const user = await User.findById(decode.id).select('name role');
 
       if (!user) return res.status(401).json({ message: 'User no longer exists' });
 
-      req.user = decode;
+      req.user = {
+         id: user._id,
+         name: user.name,
+         role: user.role,
+      };
       next();
    } catch (err) {
       // const msg = error.name === 'TokenExpiredError' ? 'Access token expired' : 'Invalid Token';

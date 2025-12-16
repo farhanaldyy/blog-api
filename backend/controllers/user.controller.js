@@ -33,18 +33,28 @@
 
 import { Profile } from '../models/userProfile.model.js';
 
+// read profile
+export const readProfile = async (req, res, next) => {
+   try {
+      const userProfile = await Profile.findOne({ userId: req.user.id });
+
+      if (!userProfile) return res.status(404).json({ message: 'User profile not found', ok: false });
+
+      res.json({ userProfile, message: 'success' });
+   } catch (err) {
+      next(err);
+   }
+};
+
 // add profile
 export const addProfile = async (req, res, next) => {
    try {
-      const { fullname, phone, address, bio, birthday } = req.body;
-
-      // const avatarUrl = req.file ? `/uploads/${req.file.filename}` : null;
-      const avatarUrl = '/uploads/avatar.jpg'; // dummy url
+      const { fullname, phone, address, bio, birthday } = req.body ?? {};
 
       const profile = await Profile.create({
          userId: req.user.id,
+         username: req.user.name,
          fullname,
-         avatar: avatarUrl,
          phone,
          address,
          bio,
@@ -68,18 +78,28 @@ export const addProfile = async (req, res, next) => {
 
 export const editProfile = async (req, res, next) => {
    try {
-      const { fullname, phone, address, bio, birthday } = req.body;
+      const { fullname, avatar, phone, address, bio, birthday } = req.body;
       const update = {};
 
       if (fullname) update.fullname = fullname;
-      if (phone) update.phone = phones;
+      if (req.file) update.avatar = `/uploads/profile/${req.file.filename}`;
+      if (phone) update.phone = phone;
       if (address) update.address = address;
       if (bio) update.bio = bio;
       if (birthday) update.birthday = birthday;
 
-      const edit = await Profile.findByIdAndUpdate(req.params.id, update, { new: true });
+      const edit = await Profile.findOneAndUpdate({ userId: req.user.id }, update, { new: true, runValidators: true });
       if (!edit) return res.status(404).json({ message: 'Data not found' });
       res.json(edit);
+   } catch (err) {
+      next(err);
+   }
+};
+
+export const deleteProfile = async (req, res, next) => {
+   try {
+      await Profile.findByIdAndUpdate(req.params.id);
+      res.status(204).json({ message: 'Profile deleted!' }).end();
    } catch (err) {
       next(err);
    }
