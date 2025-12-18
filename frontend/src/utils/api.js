@@ -52,6 +52,7 @@ export function setAccessToken(token) {
 // }
 
 export async function api(url, options = {}) {
+   // console.log(accessToken);
    const isFormData = options.body instanceof FormData;
 
    const res = await fetch(url, {

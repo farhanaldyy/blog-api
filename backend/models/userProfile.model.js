@@ -9,6 +9,7 @@ const profileScheme = new mongose.Schema(
       phone: { type: Number, default: null },
       address: { type: String, default: null },
       bio: { type: String, default: null },
+      personalweb: { type: String, default: null },
       birthday: { type: Date, default: null },
    },
    {

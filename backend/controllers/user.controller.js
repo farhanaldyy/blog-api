@@ -49,7 +49,7 @@ export const readProfile = async (req, res, next) => {
 // add profile
 export const addProfile = async (req, res, next) => {
    try {
-      const { fullname, phone, address, bio, birthday } = req.body ?? {};
+      const { fullname, phone, address, bio, personalweb, birthday } = req.body ?? {};
 
       const profile = await Profile.create({
          userId: req.user.id,
@@ -58,6 +58,7 @@ export const addProfile = async (req, res, next) => {
          phone,
          address,
          bio,
+         personalweb,
          birthday,
       });
 
@@ -78,7 +79,7 @@ export const addProfile = async (req, res, next) => {
 
 export const editProfile = async (req, res, next) => {
    try {
-      const { fullname, avatar, phone, address, bio, birthday } = req.body;
+      const { fullname, avatar, phone, address, bio, personalweb, birthday } = req.body;
       const update = {};
 
       if (fullname) update.fullname = fullname;
@@ -86,6 +87,7 @@ export const editProfile = async (req, res, next) => {
       if (phone) update.phone = phone;
       if (address) update.address = address;
       if (bio) update.bio = bio;
+      if (personalweb) update.personalweb = personalweb;
       if (birthday) update.birthday = birthday;
 
       const edit = await Profile.findOneAndUpdate({ userId: req.user.id }, update, { new: true, runValidators: true });

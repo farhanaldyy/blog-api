@@ -14,6 +14,8 @@
          crossorigin="anonymous"
          referrerpolicy="no-referrer" />
 
+      <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
+
       <!-- Protect page -->
       <script></script>
    </head>
@@ -69,7 +71,6 @@
                         anchor="bottom end"
                         popover
                         class="w-48 origin-top-right rounded-md bg-white py-1 shadow-lg outline outline-black/5 transition transition-discrete [--anchor-gap:--spacing(2)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in">
-                        <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden">Your profile</a>
                         <a href="#" class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden">Dashboard</a>
                         <a href="#" class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden">Settings</a>
                         <a id="logout" href="#" class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden">Sign out</a>
@@ -93,7 +94,7 @@
       <!-- content section -->
       <section class="mx-auto max-w-5xl px-2 sm:px-6 lg:px-8 mt-20 flex flex-col gap-4">
          <!-- card profile -->
-         <div class="relative w-full bg-white flex flex-col gap-4 rounded-lg px-20 py-5">
+         <div id="profile" class="relative w-full bg-white flex flex-col gap-4 rounded-lg px-20 py-5">
             <img id="avatar" src="" class="absolute -top-13 left-1/2 -translate-x-1/2 w-35 h-35 rounded-full bg-neutral-800 border-8 border-neutral-100" />
             <!-- information -->
             <div class="text-center mt-20">
@@ -102,26 +103,26 @@
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident animi beatae ad, tempora vero earum nam velit tempore! Error, veniam.
                </p>
                <div id="info-profile" class="mt-4 flex items-center gap-4 justify-center">
-                  <p id="address" class="text-sm text-neutral-700"><i class="fas fa-location-pin-lock"></i> Karawang, Indonesia</p>
-                  <p id="joinned" class="text-sm text-neutral-700"><i class="fas fa-network-wired"></i> Joined on Dec 2025</p>
-                  <p class="text-sm text-neutral-700"><i class="fas fa-link"></i> <a id="personal-web" href="#" class="text-sky-700">www.personalweb.com</a></p>
+                  <p class="text-sm text-neutral-700"><i class="fas fa-location-pin-lock"></i> <span id="address"></span></p>
+                  <p class="text-sm text-neutral-700"><i class="fas fa-network-wired"></i> <span id="joinned"></span></p>
+                  <p class="text-sm text-neutral-700"><i class="fas fa-link"></i> <a id="personal-web" href="#" class="text-sky-700" target="_blank"></a></p>
                </div>
             </div>
          </div>
 
          <!-- blog information -->
          <div class="w-full bg-white flex items-center justify-center gap-4 rounded-lg px-20 py-5">
-            <div class="flex items-center gap-2 bg-neutral-100 py-2 px-4 rounded-lg font-medium text-neutral-700">
+            <a id="btn-post" href="#" class="flex items-center gap-2 bg-neutral-100 py-2 px-4 rounded-lg font-medium text-neutral-700">
                <i class="fas fa-newspaper"></i>
-               <p>1 posts published</p>
-            </div>
+               <span id="countPost">1</span> posts published
+            </a>
             <div class="flex items-center gap-2 bg-neutral-100 py-2 px-4 rounded-lg font-medium text-neutral-700">
                <i class="fas fa-comment-alt"></i>
-               <p>5 comments written</p>
+               <p><span id="countCom">3</span> comments written</p>
             </div>
             <div class="flex items-center gap-2 bg-neutral-100 py-2 px-4 rounded-lg font-medium text-neutral-600">
                <i class="fas fa-hashtag"></i>
-               <p>10 tags followed</p>
+               <p><span id="countTags">2</span> tags followed</p>
             </div>
          </div>
 
@@ -134,6 +135,7 @@
       <script type="module">
          import { logout } from "../api/auth.js";
          import { readProfile } from "../api/profile.js";
+         import { formatedDate } from "../utils/formatDate.js";
          const { API_BASE_URL } = window.APP_CONFIG;
 
          // read profile action
@@ -142,7 +144,11 @@
                const avatar = document.getElementById("avatar");
                const name = document.getElementById("profile-name");
                const bio = document.getElementById("profile-bio");
-               if (!avatar || !name || !bio) return;
+               const address = document.getElementById("address");
+               const joinned = document.getElementById("joinned");
+               const webPersonal = document.getElementById("personal-web");
+
+               if (!avatar || !name || !bio || !address || !joinned || !webPersonal) return;
 
                const data = await readProfile();
                if (!data?.userProfile) {
@@ -153,12 +159,17 @@
                avatar.src = `${API_BASE_URL}${data.userProfile.avatar}`;
                name.innerText = data.userProfile.fullname;
                bio.innerText = data.userProfile.bio;
+               address.innerText = data.userProfile.address;
+               joinned.innerText = formatedDate(data.userProfile.createdAt);
+               webPersonal.innerText = data.userProfile.personalweb;
             } catch (err) {
                console.log("Init profile failed: ", err);
             }
          }
 
          initProfile();
+
+         // list post generated
 
          // logout action
          const btnLogout = document.getElementById("logout").addEventListener("click", async (e) => {
