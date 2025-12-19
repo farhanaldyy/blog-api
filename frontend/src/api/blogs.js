@@ -1,4 +1,5 @@
 import { api } from '../utils/api.js';
+import { bootstrapAuth } from '../utils/bootstrapAuth.js';
 const URL_API = 'http://localhost:5000/api/blogs';
 
 async function createPosts(title, content, coverImage, tags, category, status, publish) {
@@ -30,6 +31,9 @@ async function createPosts(title, content, coverImage, tags, category, status, p
 
    formData.append('publishAt', publish ?? '');
    formData.append('status', status);
+
+   // token check
+   await bootstrapAuth();
 
    try {
       const res = await api(`${URL_API}/`, {

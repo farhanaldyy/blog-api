@@ -41,7 +41,7 @@
                   <div class="hidden sm:ml-6 sm:block">
                      <div class="flex space-x-4">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
-                        <a href="#" aria-current="page" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white hover:bg-sky-700 hover:text-white">Publics</a>
+                        <a href="./myblogs.html" aria-current="page" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white hover:bg-sky-700 hover:text-white">Publics</a>
                         <a href="./create-post.html" class="rounded-md px-3 py-2 text-sm font-medium text-gray-900 hover:bg-white/5 hover:text-sky-700">Create Post</a>
                         <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-900 hover:bg-white/5 hover:text-sky-700">Notifications</a>
                      </div>
@@ -84,7 +84,23 @@
       </nav>
 
       <!-- content section -->
-      <section class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8"></section>
+      <section class="mx-auto max-w-7xl mt-4 flex flex-col gap-4 px-2 sm:px-6 lg:px-8">
+         <h1 class="text-3xl font-semibold">Dashboard</h1>
+         <div class="flex items-center justify-between gap-4">
+            <div class="w-full bg-white p-8 rounded-lg">
+               <h1 class="text-3xl text-neutral-900 font-bold"><span id="totalReaction">10</span></h1>
+               <p class="text-md text-neutral-500">Total Post Reaction</p>
+            </div>
+            <div class="w-full bg-white p-8 rounded-lg">
+               <h1 class="text-3xl text-neutral-900 font-bold"><span id="totalComents">30</span></h1>
+               <p class="text-md text-neutral-500">Total Post Comments</p>
+            </div>
+            <div class="w-full bg-white p-8 rounded-lg">
+               <h1 class="text-3xl text-neutral-900 font-bold"><span id="totalView">100</span> < 500</h1>
+               <p class="text-md text-neutral-500">Total Post View</p>
+            </div>
+         </div>
+      </section>
 
       <!-- script -->
       <script type="module">
