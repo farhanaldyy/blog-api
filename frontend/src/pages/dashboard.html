@@ -83,21 +83,115 @@
          </el-disclosure>
       </nav>
 
-      <!-- content section -->
+      <!-- dashboarads section -->
       <section class="mx-auto max-w-7xl mt-4 flex flex-col gap-4 px-2 sm:px-6 lg:px-8">
          <h1 class="text-3xl font-semibold">Dashboard</h1>
+         <!-- total data -->
          <div class="flex items-center justify-between gap-4">
             <div class="w-full bg-white p-8 rounded-lg">
                <h1 class="text-3xl text-neutral-900 font-bold"><span id="totalReaction">10</span></h1>
-               <p class="text-md text-neutral-500">Total Post Reaction</p>
+               <p class="text-sm text-neutral-500">Total Post Reactions</p>
             </div>
             <div class="w-full bg-white p-8 rounded-lg">
                <h1 class="text-3xl text-neutral-900 font-bold"><span id="totalComents">30</span></h1>
-               <p class="text-md text-neutral-500">Total Post Comments</p>
+               <p class="text-sm text-neutral-500">Total Post Comments</p>
             </div>
             <div class="w-full bg-white p-8 rounded-lg">
                <h1 class="text-3xl text-neutral-900 font-bold"><span id="totalView">100</span> < 500</h1>
-               <p class="text-md text-neutral-500">Total Post View</p>
+               <p class="text-sm text-neutral-500">Total Post View</p>
+            </div>
+         </div>
+
+         <!-- data info -->
+         <div class="flex gap-4">
+            <!-- left -->
+            <div id="left" class="w-[40%] bg-white rounded-lg p-4">
+               <ul class="w-full">
+                  <li>
+                     <a href="#" class="text-sm font-medium flex justify-between items-center w-full px-2 py-3 rounded-lg hover:bg-neutral-100 hover:text-sky-700" aria-current="page">
+                        <span>Posts</span> <span class="p-indicator bg-neutral-200 rounded-md px-1.5 py-0.5">1</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#" class="text-sm font-medium flex justify-between items-center w-full px-2 py-3 rounded-lg hover:bg-neutral-100 hover:text-sky-700"><span>Series</span></a>
+                  </li>
+                  <li>
+                     <a href="#" class="text-sm font-medium flex justify-between items-center w-full px-2 py-3 rounded-lg hover:bg-neutral-100 hover:text-sky-700">
+                        <span>Followers</span> <span class="f-indicator bg-neutral-200 rounded-md px-1.5 py-0.5">100</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#" class="text-sm font-medium flex justify-between items-center w-full px-2 py-3 rounded-lg hover:bg-neutral-100 hover:text-sky-700">
+                        <span>Following Tags</span> <span class="ft-indicator bg-neutral-200 rounded-md px-1.5 py-0.5">23</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#" class="text-sm font-medium flex justify-between items-center w-full px-2 py-3 rounded-lg hover:bg-neutral-100 hover:text-sky-700">
+                        <span>Following Users</span> <span class="fu-indicator bg-neutral-200 rounded-md px-1.5 py-0.5">89</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#" class="text-sm font-medium flex justify-between items-center w-full px-2 py-3 rounded-lg hover:bg-neutral-100 hover:text-sky-700">
+                        <span>Following Organizations</span> <span class="fo-indicator bg-neutral-200 rounded-md px-1.5 py-0.5">11</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#" class="text-sm font-medium flex justify-between items-center w-full px-2 py-3 rounded-lg hover:bg-neutral-100 hover:text-sky-700">
+                        <span>Following Podcasts</span> <span class="fp-indicator bg-neutral-200 rounded-md px-1.5 py-0.5">4</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#" class="text-sm font-medium flex justify-between items-center w-full px-2 py-3 rounded-lg hover:bg-neutral-100 hover:text-sky-700"><span>Analytics</span></a>
+                  </li>
+                  <li>
+                     <a href="#" class="text-sm font-medium flex justify-between items-center w-full px-2 py-3 rounded-lg hover:bg-neutral-100 hover:text-sky-700">
+                        <span>Hidden Tags</span> <span class="ht-indicator bg-neutral-200 rounded-md px-1.5 py-0.5">10</span>
+                     </a>
+                  </li>
+               </ul>
+            </div>
+            <!-- right -->
+            <div id="right" class="w-full flex flex-col gap-4">
+               <div class="flex justify-between items-center">
+                  <!-- untuk tidak ada padding sama sekali ginakan : m-0 p-0 leading-none -->
+                  <h4 class="text-xl font-semibold">Posts</h4>
+                  <div class="flex gap-4">
+                     <a href="#" class="text-sm font-medium px-3 py-2 rounded-lg border-2 border-neutral-700">Show quickie posts</a>
+                     <select name="dashboard_sort" id="dashboard_sort" aria-label="Sort By" class="crayons-select w-auto text-sm font-medium px-3 py-2 rounded-lg border-2 border-neutral-700">
+                        <option value="creation-desc">Recently Created</option>
+                        <option value="published-desc">Recently Published</option>
+                        <option value="views-desc">Most Views</option>
+                        <option value="reactions-desc">Most Reactions</option>
+                        <option value="comments-desc">Most Comments</option>
+                     </select>
+                  </div>
+               </div>
+               <!-- posting blogs -->
+               <div id="list-posts">
+                  <div class="flex justify-between items-center p-4 rounded-lg bg-white">
+                     <h1 class="bg-amber-100 max-w-[300px] truncate text-lg font-medium">Artificial Intelligence Titile AI 2026 in USA Populate</h1>
+                     <span id="status-blog" class="text-sm bg-amber-100 px-2 py-1 rounded-md">Published</span>
+                     <div class="flex gap-4">
+                        <a href="#" class="text-sm">Delete</a>
+                        <a href="#" class="text-sm">Edit</a>
+                        <el-dropdown class="relative text-sm">
+                           <button class="relative flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 hover:cursor-pointer">
+                              <span class="absolute -inset-1.5"></span>
+                              <span class="sr-only">Open user menu</span>
+                              options
+                           </button>
+
+                           <el-menu
+                              anchor="bottom end"
+                              popover
+                              class="w-40 origin-top-right rounded-md bg-white py-1 shadow-lg outline outline-black/5 transition transition-discrete [--anchor-gap:--spacing(2)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in">
+                              <a href="#" class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden">Stats</a>
+                              <a id="logout" href="#" class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden">Archive post</a>
+                           </el-menu>
+                        </el-dropdown>
+                     </div>
+                  </div>
+               </div>
             </div>
          </div>
       </section>
