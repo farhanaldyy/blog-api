@@ -88,15 +88,15 @@
          <h1 class="text-3xl font-semibold">Dashboard</h1>
          <!-- total data -->
          <div class="flex items-center justify-between gap-4">
-            <div class="w-full bg-white p-8 rounded-lg">
+            <div class="w-full bg-white p-8 rounded-lg border border-neutral-200">
                <h1 class="text-3xl text-neutral-900 font-bold"><span id="totalReaction">10</span></h1>
                <p class="text-sm text-neutral-500">Total Post Reactions</p>
             </div>
-            <div class="w-full bg-white p-8 rounded-lg">
+            <div class="w-full bg-white p-8 rounded-lg border border-neutral-200">
                <h1 class="text-3xl text-neutral-900 font-bold"><span id="totalComents">30</span></h1>
                <p class="text-sm text-neutral-500">Total Post Comments</p>
             </div>
-            <div class="w-full bg-white p-8 rounded-lg">
+            <div class="w-full bg-white p-8 rounded-lg border border-neutral-200">
                <h1 class="text-3xl text-neutral-900 font-bold"><span id="totalView">100</span> < 500</h1>
                <p class="text-sm text-neutral-500">Total Post View</p>
             </div>
@@ -105,7 +105,7 @@
          <!-- data info -->
          <div class="flex gap-4">
             <!-- left -->
-            <div id="left" class="w-[40%] bg-white rounded-lg p-4">
+            <div id="left" class="w-[40%] bg-white rounded-lg p-4 border border-neutral-200">
                <ul class="w-full">
                   <li>
                      <a href="#" class="text-sm font-medium flex justify-between items-center w-full px-2 py-3 rounded-lg hover:bg-neutral-100 hover:text-sky-700" aria-current="page">
@@ -156,8 +156,12 @@
                   <!-- untuk tidak ada padding sama sekali ginakan : m-0 p-0 leading-none -->
                   <h4 class="text-xl font-semibold">Posts</h4>
                   <div class="flex gap-4">
-                     <a href="#" class="text-sm font-medium px-3 py-2 rounded-lg border-2 border-neutral-700">Show quickie posts</a>
-                     <select name="dashboard_sort" id="dashboard_sort" aria-label="Sort By" class="crayons-select w-auto text-sm font-medium px-3 py-2 rounded-lg border-2 border-neutral-700">
+                     <a href="#" class="text-sm font-medium px-3 py-2 rounded-lg border-2 border-neutral-900 hover:bg-neutral-900 hover:text-white">Show quickie posts</a>
+                     <select
+                        name="dashboard_sort"
+                        id="dashboard_sort"
+                        aria-label="Sort By"
+                        class="crayons-select w-auto text-sm font-medium px-3 py-2 rounded-lg border-2 border-neutral-900 hover:bg-neutral-900 hover:text-white hover:cursor-pointer">
                         <option value="creation-desc">Recently Created</option>
                         <option value="published-desc">Recently Published</option>
                         <option value="views-desc">Most Views</option>
@@ -168,17 +172,31 @@
                </div>
                <!-- posting blogs -->
                <div id="list-posts">
-                  <div class="flex justify-between items-center p-4 rounded-lg bg-white">
-                     <h1 class="bg-amber-100 max-w-[300px] truncate text-lg font-medium">Artificial Intelligence Titile AI 2026 in USA Populate</h1>
+                  <div class="flex justify-between items-center p-4 rounded-lg bg-white border border-neutral-200">
+                     <h1 class="max-w-[300px] truncate text-lg font-medium">Artificial Intelligence Titile AI 2026 in USA Populate</h1>
                      <span id="status-blog" class="text-sm bg-amber-100 px-2 py-1 rounded-md">Published</span>
                      <div class="flex gap-4">
-                        <a href="#" class="text-sm">Delete</a>
+                        <a href="#" class="text-sm font-medium text-red-700">Delete</a>
                         <a href="#" class="text-sm">Edit</a>
                         <el-dropdown class="relative text-sm">
                            <button class="relative flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 hover:cursor-pointer">
                               <span class="absolute -inset-1.5"></span>
                               <span class="sr-only">Open user menu</span>
-                              options
+                              <svg
+                                 fill="#000000"
+                                 width="20px"
+                                 height="20px"
+                                 viewBox="0 0 32 32"
+                                 enable-background="new 0 0 32 32"
+                                 id="Glyph"
+                                 version="1.1"
+                                 xml:space="preserve"
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 xmlns:xlink="http://www.w3.org/1999/xlink">
+                                 <path d="M16,13c-1.654,0-3,1.346-3,3s1.346,3,3,3s3-1.346,3-3S17.654,13,16,13z" id="XMLID_287_" />
+                                 <path d="M6,13c-1.654,0-3,1.346-3,3s1.346,3,3,3s3-1.346,3-3S7.654,13,6,13z" id="XMLID_289_" />
+                                 <path d="M26,13c-1.654,0-3,1.346-3,3s1.346,3,3,3s3-1.346,3-3S27.654,13,26,13z" id="XMLID_291_" />
+                              </svg>
                            </button>
 
                            <el-menu
@@ -197,6 +215,7 @@
       </section>
 
       <!-- script -->
+      <script type="module" src="../scripts/dashboard.js"></script>
       <script type="module">
          import { logout } from "../api/auth.js";
 

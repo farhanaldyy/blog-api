@@ -2,6 +2,30 @@ import { api } from '../utils/api.js';
 import { bootstrapAuth } from '../utils/bootstrapAuth.js';
 const URL_API = 'http://localhost:5000/api/blogs';
 
+// read post
+async function readPosts() {
+   await bootstrapAuth();
+
+   try {
+      const res = await api(`${URL_API}/`, {
+         method: 'GET',
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      return {
+         ok: res.ok,
+         message: res.message,
+         ...data,
+      };
+   } catch (err) {
+      return {
+         ok: false,
+         message: err.message,
+      };
+   }
+}
+
 async function createPosts(title, content, coverImage, tags, category, status, publish) {
    const formData = new FormData();
    formData.append('title', title);
@@ -56,4 +80,4 @@ async function createPosts(title, content, coverImage, tags, category, status, p
    }
 }
 
-export { createPosts };
+export { createPosts, readPosts };
