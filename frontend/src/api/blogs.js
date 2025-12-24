@@ -2,7 +2,7 @@ import { api } from '../utils/api.js';
 import { bootstrapAuth } from '../utils/bootstrapAuth.js';
 const URL_API = 'http://localhost:5000/api/blogs';
 
-// read post
+// read post (author)
 async function readPosts() {
    await bootstrapAuth();
 
@@ -14,8 +14,6 @@ async function readPosts() {
       const data = await res.json().catch(() => ({}));
 
       return {
-         ok: res.ok,
-         message: res.message,
          ...data,
       };
    } catch (err) {

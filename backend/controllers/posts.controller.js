@@ -3,7 +3,7 @@ import { Posts } from '../models/posting.model.js';
 // read post (author)
 export const readPost = async (req, res, next) => {
    try {
-      const posts = await Posts.find({ authorId: req.user.id }).lean();
+      const posts = await Posts.find({ authorId: req.user.id }).sort({ createdAt: -1 }).exec(); // sort -1 for desc data
 
       if (!posts) res.status(404).json({ message: 'Data not found!' });
 
