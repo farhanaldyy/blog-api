@@ -24,6 +24,7 @@ async function readPosts() {
    }
 }
 
+// create post
 async function createPosts(title, content, coverImage, tags, category, status, publish) {
    const formData = new FormData();
    formData.append('title', title);
@@ -78,4 +79,29 @@ async function createPosts(title, content, coverImage, tags, category, status, p
    }
 }
 
-export { createPosts, readPosts };
+// deleted post
+async function deletedPost(id) {
+   // token check
+
+   await bootstrapAuth();
+
+   try {
+      const res = await api(`${URL_API}/${id}`, {
+         method: 'DELETE',
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      return {
+         ok: res.ok,
+         message: res.message,
+      };
+   } catch (err) {
+      return {
+         ok: false,
+         message: err.message,
+      };
+   }
+}
+
+export { createPosts, readPosts, deletedPost };

@@ -84,11 +84,28 @@
       </nav>
 
       <!-- content section -->
-      <section class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8"></section>
+      <section class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+         <ul id="list"></ul>
+      </section>
 
       <!-- script -->
       <script type="module">
          import { logout } from "../api/auth.js";
+
+         // testing fragment
+         // const ul = document.querySelector("#list");
+         // const dataDummy = ["Artificial", "Computer Science", "Data Engineering", "Vision", "Space"];
+         // const fragment = new DocumentFragment();
+
+         // for (const data of dataDummy) {
+         //    const li = document.createElement("li");
+         //    li.textContent = data;
+         //    fragment.append(li);
+         // }
+
+         // console.log(fragment);
+
+         // ul.append(fragment);
 
          const btnLogout = document.getElementById("logout").addEventListener("click", async (e) => {
             e.preventDefault();
