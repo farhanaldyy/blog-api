@@ -13,6 +13,9 @@ async function renderData() {
          return;
       }
 
+      // list menu indicator
+      const postIndicator = (document.querySelector('.p-indicator').textContent = posts.length);
+
       listPost.innerHTML = '';
       renderPosts(posts);
    } catch (err) {
@@ -53,7 +56,7 @@ function createPostCard(post) {
 
    actions.innerHTML = `
       <button data-action="delete" data-id="${post['_id']}" class="text-sm font-medium text-red-700 hover:cursor-pointer">Delete</button>
-      <a href="/edit/${post['_id']}" class="text-sm">Edit</a>
+      <a href="./create-post.html?id=${post['_id']}" class="text-sm">Edit</a>
 
       <el-dropdown class="relative text-sm">
          <button class="relative flex rounded-full hover:cursor-pointer">

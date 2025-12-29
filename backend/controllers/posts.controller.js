@@ -13,6 +13,19 @@ export const readPost = async (req, res, next) => {
    }
 };
 
+// read post (by id)
+export const readPostById = async (req, res, next) => {
+   try {
+      const posts = await Posts.findById(req.params.id);
+
+      if (!posts) res.status(404).json({ message: 'Data not found!' });
+
+      res.json(posts);
+   } catch (err) {
+      next(err);
+   }
+};
+
 // simple create posting blog
 export const createPost = async (req, res, next) => {
    try {
@@ -50,7 +63,7 @@ export const createPost = async (req, res, next) => {
 
 export const updatePost = async (req, res, next) => {
    try {
-      const { title, content, excerpt, tags, categories } = req.body;
+      const { title, content, excerpt, tags, categories, status, publishAt } = req.body;
       const update = {};
 
       // check if client update image
@@ -65,6 +78,12 @@ export const updatePost = async (req, res, next) => {
       }
       if (categories) {
          Array.isArray(categories) ? (update.categories = categories) : (update.categories = categories.split(',').map((arr) => arr.trim()));
+      }
+      if (status) update.status = status;
+      if (publishAt) {
+         update.publishAt = new Date(publishAt);
+      } else {
+         update.publishAt = null;
       }
 
       const post = await Posts.findByIdAndUpdate(req.params.id, update, { new: true });

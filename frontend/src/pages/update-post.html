@@ -3,7 +3,7 @@
    <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>New Post</title>
+      <title>Update Posting</title>
 
       <link rel="icon" href="/favicon.ico" />
       <link rel="stylesheet" href="../styles/output.css" />
@@ -171,8 +171,12 @@
       <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 
       <script type="module">
-         import { createPosts, getPostById, updatedPost } from "../api/blogs.js";
-         // const { API_BASE_URL } = window.APP_CONFIG;
+         import { createPosts } from "../api/blogs.js";
+
+         // get id
+         const params = new URLSearchParams(window.location.search);
+         const id = params.get("id");
+         console.log(id);
 
          // setup tags input
          const tagsInput = document.getElementById("tag-input");
@@ -180,7 +184,7 @@
 
          let tags = [];
 
-         function renderTags() {
+         function rederTags() {
             // clear except input
             container.querySelectorAll(".tag").forEach((el) => el.remove());
 
@@ -190,23 +194,10 @@
 
                tagEl.innerHTML = `
                <span># ${tag}</span>
-               <button type="button" class="ms-1 me-1 font-bold text-red-600 hover:text-red-500 hover:cursor-pointer" data-index="${index}">x</button>`;
+               <button class="ms-1 me-1 font-bold text-red-600 hover:text-red-500 hover:cursor-pointer" data-index="${index}">x</button>`;
                container.insertBefore(tagEl, tagsInput);
             });
          }
-
-         // container tag
-         container.addEventListener("click", (e) => {
-            if (!e.target.matches("button[data-index]")) return;
-
-            e.preventDefault(); // safety net
-
-            const index = Number(e.target.dataset.index);
-
-            tags.splice(index, 1);
-            renderTags();
-            tagsInput.focus();
-         });
 
          // event if enter after add tag
          tagsInput.addEventListener("keydown", (e) => {
@@ -217,7 +208,7 @@
 
                if (!tags.includes(val)) {
                   tags.push(val);
-                  renderTags();
+                  rederTags();
                }
                tagsInput.value = "";
             }
@@ -225,8 +216,17 @@
             // backspace delete tags
             if (e.key === "Backspace" && tagsInput.value === "" && tags.length > 0) {
                tags.pop();
-               renderTags();
+               rederTags();
             }
+
+            container.addEventListener("click", (e) => {
+               const index = e.target.dataset.index;
+               if (index !== undefined) {
+                  tags.splice(index, 1);
+                  rederTags();
+               }
+               tagsInput.focus();
+            });
          });
 
          // setup quill form
@@ -294,70 +294,28 @@
             });
          });
 
-         // get id post
-         const params = new URLSearchParams(window.location.search);
-         const postId = params.get("id");
-         const isEdit = Boolean(postId);
-
-         document.title = isEdit ? "Edit Post" : "Create Post";
-
-         // if post edit form
-         if (isEdit) {
-            try {
-               const post = await getPostById(postId);
-
-               // check cover image
-               if (post.coverImage) {
-                  preview.src = `http://localhost:5000${post.coverImage}`;
-                  preview.classList.remove("hidden");
-               }
-
-               document.getElementById("title").value = post.title;
-               quill.root.innerHTML = post.content;
-
-               if (Array.isArray(post.tags)) {
-                  tags = [...post.tags];
-                  renderTags();
-               }
-            } catch (err) {
-               console.log(err.message);
-            }
-         }
-
          // form actions
          const form = document.getElementById("form");
+
          form.addEventListener("submit", async (e) => {
             e.preventDefault();
 
             try {
-               let res;
                const title = document.getElementById("title").value;
                const coverImage = fileImage.files[0];
                const category = tags?.[0] ?? null; // category take value of tags index 0
                const content = quill.root.innerHTML;
 
                if (tags.length === 0) return alert("Tags not found, add minimal 1 tag");
-               if (tags.length > 4) return alert("Tagging maximal 4 tag");
-               if (content === "<p><br></p>") return alert("Content required!");
+               if (tags.length === 5) return alert("Tagging maximal 4 tag");
+
+               if (quill.root.innerHTML === "<p><br></p>") return alert("Your content must be write something");
 
                const clickButton = e.submitter.dataset.action;
                const publish = clickButton === "publish" ? new Date().toISOString() : null;
                const status = clickButton === "publish" ? "published" : "draft";
 
-               const payload = {
-                  title,
-                  content,
-                  tags,
-                  category,
-                  status,
-                  publish,
-               };
-
-               if (isEdit) {
-                  res = await updatedPost(postId, payload, coverImage);
-               } else {
-                  res = await createPosts(title, content, coverImage, tags, category, status, publish);
-               }
+               const res = await createPosts(title, content, coverImage, tags, category, status, publish);
 
                alert(res.ok ? "Success" : res.message);
 
