@@ -1,4 +1,5 @@
 import { readPosts, deletedPost } from '../api/blogs.js';
+import { formatedDate } from '../utils/formatDate.js';
 
 const listPost = document.getElementById('list-posts');
 
@@ -40,15 +41,32 @@ function createPostCard(post) {
    const card = document.createElement('div');
    card.className = 'flex justify-between items-center p-4 rounded-lg bg-white border border-neutral-200';
 
+   // div title
+   const titlePub = document.createElement('div');
+   titlePub.className = 'flex flex-col gap-1';
+
    // title
    const title = document.createElement('h1');
-   title.className = 'max-w-[300px] truncate text-lg font-medium';
+   title.className = 'max-w-[250px] truncate text-lg font-semibold';
    title.textContent = post.title ?? 'Untitled';
+
+   // published
+   const published = document.createElement('span');
+   published.className = 'text-sm text-neutral-500';
+   published.textContent = post.publishAt ? `Published: ${formatedDate(post.publishAt)}` : null;
 
    // status
    const status = document.createElement('span');
-   status.className = 'text-sm bg-amber-100 px-2 py-1 rounded-md';
-   status.textContent = post.status ?? 'draft';
+   // status.textContent = post.status ?? 'draft';
+   if (post.status === 'published') {
+      titlePub.append(title, published);
+      status.className = 'text-sm text-neutral-500';
+      status.innerHTML = `<i class="fa-regular fa-heart"></i>${0} <i class="fa-regular fa-comment ms-2"></i>${0}  <i class="fa-regular fa-eye ms-2"></i>${'<25'}`;
+   } else {
+      titlePub.append(title);
+      status.className = 'text-sm bg-amber-100 px-2 py-1 rounded-md';
+      status.textContent = 'Draft';
+   }
 
    // actions
    const actions = document.createElement('div');
@@ -82,7 +100,7 @@ function createPostCard(post) {
       </el-dropdown>
    `;
 
-   card.append(title, status, actions);
+   card.append(titlePub, status, actions);
    return card;
 }
 
