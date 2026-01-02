@@ -64,7 +64,9 @@
                <div class="flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                   <div class="hidden sm:ml-6 sm:block">
                      <div class="flex space-x-4">
-                        <a href="./myblogs.html" class="rounded-md px-3 py-2 text-sm font-medium text-gray-900 hover:bg-white/5 hover:text-sky-700"><i class="fa-solid fa-arrow-left"></i> Back Home</a>
+                        <a id="btn-back" href="./myblogs.html" class="rounded-md px-3 py-2 text-sm font-medium text-gray-900 hover:bg-white/5 hover:text-sky-700"
+                           ><i class="fa-solid fa-arrow-left"></i> Back Home</a
+                        >
                      </div>
                   </div>
                </div>
@@ -88,6 +90,8 @@
 
                   <div class="flex gap-4">
                      <input type="file" name="cover-image" id="cover-image" accept=".jpg, .jpeg, .png, image/jpeg, image/png" hidden />
+                     <input type="text" name="publish" id="published-at" hidden />
+                     <input type="text" name="status" id="status" hidden />
                      <button
                         id="btn-cover"
                         type="button"
@@ -133,28 +137,7 @@
                         data-description="<li>Use Markdown to write and format posts.</li> <li>Commonly used syntax</li> <br><li>Embed rich content such as Tweets, YouTube videos, etc. Use the complete URL: {% embed https://... %}. See a list of supported embeds.</li> <br> <li>In addition to images for the post's content, you can also drag and drop a cover image.</li>"></div>
                   </div>
                </div>
-               <div class="flex gap-4 items-center">
-                  <button
-                     id="btn-pub"
-                     type="submit"
-                     data-action="publish"
-                     name="action"
-                     class="btn-post rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-700 hover:text-white hover:cursor-pointer"
-                     data-description="<li>Ensure your post has a cover image set to make the most of the home feed and social media platforms.</li> <br> <li>Share your post on social media platforms or with your co-workers or local communities.</li> <br> <li>Ask people to leave questions for you in the comments. It's a great way to spark additional discussion describing personally why you wrote it or why people might find it helpful.</li>">
-                     Publish
-                  </button>
-                  <button
-                     id="btn-draft"
-                     type="submit"
-                     data-action="draft"
-                     name="action"
-                     class="rounded-md px-4 py-2 text-sm font-semibold text-neutral-900 hover:bg-sky-100 hover:text-neutral-600 hover:cursor-pointer"
-                     data-description="<li>Ensure your post has a cover image set to make the most of the home feed and social media platforms.</li> <br> <li>Share your post on social media platforms or with your co-workers or local communities.</li> <br> <li>Ask people to leave questions for you in the comments. It's a great way to spark additional discussion describing personally why you wrote it or why people might find it helpful.</li>">
-                     Save Draft
-                  </button>
-                  <a class="rounded-md px-4 py-2 text-lg font-medium text-neutral-900 hover:bg-sky-100 hover:text-neutral-600 hover:cursor-pointer"><i class="fa-solid fa-gear"></i></a>
-                  <a href="#" class="rounded-md px-4 py-2 text-sm text-neutral-900 hover:bg-sky-100 hover:text-neutral-600 hover:cursor-pointer">Revert new changes</a>
-               </div>
+               <div id="button-form" class="flex gap-4 items-center"></div>
             </form>
          </div>
          <!-- right -->
@@ -299,6 +282,33 @@
          const postId = params.get("id");
          const isEdit = Boolean(postId);
 
+         // form button
+         const btnForm = document.getElementById("button-form");
+
+         // button inner
+         const btnCreate = `
+            <button
+               id="btn-pub"
+               type="submit"
+               data-action="publish"
+               name="action"
+               class="btn-post rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-700 hover:text-white hover:cursor-pointer"
+               data-description="<li>Ensure your post has a cover image set to make the most of the home feed and social media platforms.</li> <br> <li>Share your post on social media platforms or with your co-workers or local communities.</li> <br> <li>Ask people to leave questions for you in the comments. It's a great way to spark additional discussion describing personally why you wrote it or why people might find it helpful.</li>">
+               Publish
+            </button>
+            <button
+               id="btn-draft"
+               type="submit"
+               data-action="draft"
+               name="action"
+               class="rounded-md px-4 py-2 text-sm font-semibold text-neutral-900 hover:bg-sky-100 hover:text-neutral-600 hover:cursor-pointer"
+               data-description="<li>Ensure your post has a cover image set to make the most of the home feed and social media platforms.</li> <br> <li>Share your post on social media platforms or with your co-workers or local communities.</li> <br> <li>Ask people to leave questions for you in the comments. It's a great way to spark additional discussion describing personally why you wrote it or why people might find it helpful.</li>">
+               Save Draft
+            </button>
+            <a class="rounded-md px-4 py-2 text-lg font-medium text-neutral-900 hover:bg-sky-100 hover:text-neutral-600 hover:cursor-pointer"><i class="fa-solid fa-gear"></i></a>
+            <a href="#" class="rounded-md px-4 py-2 text-sm text-neutral-900 hover:bg-sky-100 hover:text-neutral-600 hover:cursor-pointer">Revert new changes</a>
+         `;
+
          document.title = isEdit ? "Edit Post" : "Create Post";
 
          // if post edit form
@@ -319,9 +329,37 @@
                   tags = [...post.tags];
                   renderTags();
                }
+
+               // status and publised value
+               document.getElementById("published-at").value = post.publishAt;
+               document.getElementById("status").value = post.status;
+
+               if (post.status === "published") {
+                  btnForm.innerHTML = `
+                     <button
+                        id="btn-save"
+                        type="submit"
+                        data-action="save"
+                        name="action"
+                        class="btn-post rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-700 hover:text-white hover:cursor-pointer"
+                        data-description="<li>Ensure your post has a cover image set to make the most of the home feed and social media platforms.</li> <br> <li>Share your post on social media platforms or with your co-workers or local communities.</li> <br> <li>Ask people to leave questions for you in the comments. It's a great way to spark additional discussion describing personally why you wrote it or why people might find it helpful.</li>">
+                        Save Changes
+                     </button>
+                     <a class="rounded-md px-4 py-2 text-lg font-medium text-neutral-900 hover:bg-sky-100 hover:text-neutral-600 hover:cursor-pointer"><i class="fa-solid fa-gear"></i></a>
+                     <a href="#" class="rounded-md px-4 py-2 text-sm text-neutral-900 hover:bg-sky-100 hover:text-neutral-600 hover:cursor-pointer">Revert new changes</a>
+                  `;
+               } else if (post.status === "draft") {
+                  btnForm.innerHTML = btnCreate;
+               }
+
+               // btn back
+               document.getElementById("btn-back").href = "./dashboard.html";
+               document.getElementById("btn-back").innerHTML = `<i class="fa-solid fa-arrow-left"></i> Back to dashboard`;
             } catch (err) {
-               console.log(err.message);
+               alert(err.message);
             }
+         } else {
+            btnForm.innerHTML = btnCreate;
          }
 
          // form actions
@@ -341,8 +379,22 @@
                if (content === "<p><br></p>") return alert("Content required!");
 
                const clickButton = e.submitter.dataset.action;
-               const publish = clickButton === "publish" ? new Date().toISOString() : null;
-               const status = clickButton === "publish" ? "published" : "draft";
+               // const publish = clickButton === "publish" ? new Date().toISOString() : null;
+               // const status = clickButton === "publish" ? "published" : "draft";
+
+               let publish;
+               let status;
+
+               if (clickButton === "publish") {
+                  publish = new Date().toISOString();
+                  status = "published";
+               } else if (clickButton === "save") {
+                  publish = document.getElementById("published-at").value;
+                  status = document.getElementById("status").value;
+               } else {
+                  publish = null;
+                  status = "draft";
+               }
 
                const payload = {
                   title,

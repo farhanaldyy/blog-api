@@ -46,9 +46,10 @@ function createPostCard(post) {
    titlePub.className = 'flex flex-col gap-1';
 
    // title
-   const title = document.createElement('h1');
-   title.className = 'max-w-[250px] truncate text-lg font-semibold';
+   const title = document.createElement('a');
+   title.className = 'max-w-[250px] truncate text-lg font-semibold hover:text-sky-700';
    title.textContent = post.title ?? 'Untitled';
+   title.href = `./view-post.html?id=${post._id}`;
 
    // published
    const published = document.createElement('span');

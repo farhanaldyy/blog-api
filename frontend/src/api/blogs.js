@@ -129,9 +129,7 @@ async function updatedPost(id, payload, coverImage) {
    }
 
    formData.append('status', payload.status);
-   formData.append('publishAt', payload.publish);
-
-   console.log(formData);
+   formData.append('publishAt', payload.publish ?? '');
 
    // token check
    await bootstrapAuth();
