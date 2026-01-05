@@ -6,12 +6,18 @@
       <title>My Post</title>
       <link rel="stylesheet" href="../styles/output.css" />
       <link rel="icon" href="/favicon.ico" />
+      <link
+         rel="stylesheet"
+         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+         crossorigin="anonymous"
+         referrerpolicy="no-referrer" />
 
       <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
    </head>
    <body class="bg-neutral-100">
       <!-- Include this script tag or install `@tailwindplus/elements` via npm: -->
-      <nav class="relative bg-white border-b border-neutral-200">
+      <nav class="relative bg-white border-b border-neutral-200 z-100">
          <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div class="relative flex h-16 items-center justify-between">
                <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -84,8 +90,69 @@
       </nav>
 
       <!-- content section -->
-      <section class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-         <ul id="list"></ul>
+      <section class="mx-auto max-w-7xl mt-4 flex flex-col gap-4 px-2 sm:px-6 lg:px-8">
+         <div id="layout-post" class="flex gap-4">
+            <aside id="info-post" class="flex flex-col gap-9 px-4 fixed mt-10">
+               <div class="flex flex-col items-center">
+                  <i class="fa-regular fa-heart text-lg"></i>
+                  <span id="like">0</span>
+               </div>
+               <div class="flex flex-col items-center">
+                  <i class="fa-regular fa-comment text-lg"></i>
+                  <span id="comment">0</span>
+               </div>
+               <div class="flex flex-col items-center">
+                  <i class="fa-regular fa-bookmark text-lg"></i>
+                  <span id="save">0</span>
+               </div>
+               <div class="flex flex-col items-center">
+                  <i class="fa-solid fa-ellipsis text-lg"></i>
+               </div>
+            </aside>
+            <main class="min-w-[70%] bg-amber-200 ms-15 rounded-lg overflow-clip">
+               <article>
+                  <header>
+                     <a href="#" class=""><img class="w-full h-60 object-cover" src="./dev01.jpg" alt="cover-image" /></a>
+                     <div class="bg-white px-8 py-6 flex flex-col gap-4">
+                        <div class="flex justify-between items-center">
+                           <div class="flex items-center gap-2">
+                              <img class="rounded-full w-10" src="./Bleu.jpg" alt="avatar-profile" />
+                              <div class="leading-4">
+                                 <h3 id="name-profile" class="text-sm font-medium">Farhan Aldiansyah Poetra (Aldy)</h3>
+                                 <span id="posted-at" class="text-xs text-neutral-600">Posted on Dec 27, 2025</span>
+                              </div>
+                           </div>
+                           <div class="flex gap-4 text-sm bg-sky-100 px-4 py-2 text-neutral-900 rounded-md">
+                              <a href="#">Edit</a>
+                              <a href="#">Manage</a>
+                              <a href="#">Stats</a>
+                           </div>
+                        </div>
+                        <h1 id="title-post" class="text-3xl font-bold text-neutral-900">10 AI Predictions For 2026</h1>
+                        <div id="tags" class="text-sm flex gap-4 text-neutral-600">
+                           <span>#AI</span>
+                           <span>#Technology</span>
+                           <span>#2026</span>
+                           <span>#MachineLearning</span>
+                        </div>
+                     </div>
+                  </header>
+                  <div id="content-post" class="">
+                     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iure maiores ut, exercitationem eius doloribus eaque voluptate enim laborum ex! Inventore dolores deleniti culpa velit fugiat nobis
+                     incidunt in eaque, quidem error tempore recusandae eos! Magnam odit obcaecati perferendis saepe eius tempora, non cumque in omnis expedita dolor fugiat culpa incidunt facere quis? Id
+                     officiis velit fuga necessitatibus? Odio rerum quisquam ratione reprehenderit magni atque ducimus nemo officiis cumque quibusdam fuga enim eaque earum exercitationem asperiores, eos,
+                     obcaecati doloribus minus ex velit. Tenetur sunt neque ullam minus quasi. Dicta ea, sequi, incidunt voluptate eum ducimus tempora qui rem itaque similique quae!
+                  </div>
+               </article>
+            </main>
+            <aside class="min-w-[30%] bg-amber-200 rounded-lg">
+               <div id="article-show">
+                  <div id="profile"></div>
+                  <div id="trending-post"></div>
+               </div>
+               <div id="account-post"></div>
+            </aside>
+         </div>
       </section>
 
       <!-- script -->
